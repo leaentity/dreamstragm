@@ -4,7 +4,7 @@ from pathlib import Path
 from http.server import ThreadingHTTPServer, BaseHTTPRequestHandler
 from urllib.parse import urlparse
 ROOT = Path(__file__).resolve().parent.parent
-FILES = {'index.html': 'text/html', 'app.js': 'text/javascript', 'ambient.js': 'text/javascript', 'style.css': 'text/css', 'preview.png': 'image/png'}
+FILES = {'index.html': 'text/html', 'app.js': 'text/javascript', 'ambient.js': 'text/javascript', 'style.css': 'text/css', 'preview.png': 'image/png', 'assets/dream-assistant.png': 'image/png'}
 class Handler(BaseHTTPRequestHandler):
     def do_GET(self):
         name = urlparse(self.path).path.lstrip('/') or 'index.html'
