@@ -42,7 +42,7 @@ test('音频失败释放上下文，允许用户再次点击重试', async () =>
   broken.resume = async () => { throw new Error('device'); };
   let attempts = 0;
   const player = create({ makeContext: () => ++attempts === 1 ? broken : fakeContext() });
-  await assert.rejects(player.toggle(), /再次点击/);
+  await assert.rejects(player.toggle(), /Try again/);
   assert.equal(broken.state, 'closed'); assert.equal(player.state().busy, false);
   await player.toggle(); assert.equal(player.state().playing, true);
 });

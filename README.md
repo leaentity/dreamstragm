@@ -61,3 +61,7 @@ JavaScript 语法检查通过；HTTP 200。浏览器实际走通新建整理保�
 ## 视觉 V2：白纸与细签字笔
 
 2026-11-06 按用户提供的 Claude UI V2 参考，统一为白纸、深灰细线、手写标题、椭圆主动作和线稿导航；保留粉发像素助手及现有所有模拟流程。未导入参考中的服务端或旧 OpenAI 实现。完整页面覆盖、手机验证和字体差异见 [视觉规则与验收](docs/VISUAL_LANGUAGE_V2.md)。
+
+## English interface
+
+The prototype now uses English for interface copy, sample dreams, tags, scripted replies, notices and Markdown exports. User-entered text is preserved as written. The existing paper visual language remains in place: matching the requested English Figma design is pending file access, and has not been verified.

@@ -1,8 +1,8 @@
-/* 浏览器本地合成白噪音：只有用户点击才创建音频上下文，不请求外部音源。 */
+/* 浏览器本地合成Noise：只有用户点击才创建音频上下文，不请求外部音源。 */
 (() => {
   function create({ makeContext = () => {
     const Context = globalThis.AudioContext || globalThis.webkitAudioContext;
-    if (!Context) throw new Error('这个浏览器暂不支持白噪音播放。');
+    if (!Context) throw new Error('White noise is not supported in this browser.');
     return new Context();
   }, onChange = () => {} } = {}) {
     let context = null, source = null, busy = false;
@@ -27,7 +27,7 @@
       } catch (error) {
         try { await context?.close(); } catch {}
         context = null; source = null;
-        throw new Error('白噪音暂时无法播放，请再次点击或换一个浏览器。');
+        throw new Error('Audio could not play. Try again or use another browser.');
       } finally { busy = false; onChange(); }
     }
     async function pause() {
