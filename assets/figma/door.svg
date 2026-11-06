@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="216" height="149" viewBox="150 196 216 149" fill="none"><path xmlns="http://www.w3.org/2000/svg" id="door-frame" d="M270.939 321.977L268.063 230.461C268.151 227.738 269.476 226.383 272.037 226.396L315.008 226.231C317.653 226.402 318.929 227.769 318.837 230.332L320.309 318.644" stroke="#232321" stroke-width="1.44" stroke-linecap="round" stroke-linejoin="round" />
+<path xmlns="http://www.w3.org/2000/svg" id="door-panel" d="M268.315 230.935L245.061 241.387L247.916 327.502L271.29 321.608" stroke="#232321" stroke-width="1.44" stroke-linecap="round" stroke-linejoin="round" />
+<path xmlns="http://www.w3.org/2000/svg" id="knob" d="M252.139 282.496C253.492 282.22 254.227 282.761 254.342 284.119" stroke="#232321" stroke-width="1.44" stroke-linecap="round" stroke-linejoin="round" />
+<path xmlns="http://www.w3.org/2000/svg" id="ground" d="M238.736 329.903C267.447 326.15 302.198 323.8 334.621 324.271" stroke="#232321" stroke-width="1.44" stroke-linecap="round" stroke-linejoin="round" />
+<path xmlns="http://www.w3.org/2000/svg" id="floating-stairs" d="M170.089 321.377L188.79 320.407L188.873 309.841L206.252 308.786L205.619 298.359L222.994 297.184L223.21 287.095L236.996 286.374" stroke="#232321" stroke-width="1.44" stroke-linecap="round" stroke-linejoin="round" />
+</svg>

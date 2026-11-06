@@ -9,7 +9,7 @@
 ## 数据与边界
 
 数据仅保存在内存中，刷新或关闭页面后恢复固定示例。不要把真实梦境当成长期存档。
-语音不访问麦克风；整理仅规范空白；解梦为固定话术；图像为同一本地 SVG 占位插画；关系图为固定关系。三种风格是选择状态演示，不改变占位图。使用系统中文字体替代参考中的手写字体，以 CSS 纸片、描边和拼贴补足手工感。
+语音不访问麦克风；整理仅规范空白；解梦为固定话术；图像为同一本地 SVG 占位插画；关系图为固定关系。三种风格是选择状态演示，不改变占位图。英文手写标题使用本地 Gaegu Light / Regular 字体，正文保持系统字体以便阅读。
 
 ## 页面检查清单
 
@@ -65,3 +65,11 @@ JavaScript 语法检查通过；HTTP 200。浏览器实际走通新建整理保�
 ## English interface
 
 The prototype now uses English for interface copy, sample dreams, tags, scripted replies, notices and Markdown exports. User-entered text is preserved as written. The existing paper visual language remains in place: matching the requested English Figma design is pending file access, and has not been verified.
+
+## English Figma handoff applied
+
+The local `Dreamstragm_EN_Figma_Handoff.zip` supplies the exported English home screen, component board, vector paths and measurements. The homepage now follows that handoff: `dreamstragm.` header, door and floating stairs, two-line question, hand-drawn voice action, Past dreams and Journal / Explore / Circle navigation. The pixel assistant, voice bubble, manual weather, noise control, demo disclosure and export remain available as required additions. Past dreams scrolls to the existing list rather than removing journal features.
+
+Gaegu Light and Regular are stored in `assets/fonts` with the SIL Open Font License. SVG parts from the supplied export are stored in `assets/figma`; no online Figma access or remote font requests are required at runtime. Shared typography, navigation and paper dividers extend to the existing pages. `docs/design/home-en-handoff.json` preserves the design measurements.
+
+`tests/handoff-layout.cjs` checks local fonts, asset loading, responsive bounds, home coordinates, navigation placement and history scrolling (same browser-test setup as `tests/ui-smoke.cjs`). All AI and voice features remain demos; this change does not add a backend or persistence.

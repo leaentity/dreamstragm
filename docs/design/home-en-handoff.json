@@ -1,0 +1,322 @@
+{
+  "source": {
+    "figmaFileKey": "M37md5aHQ7fZzTRVj8hW1k",
+    "page": "Home · EN v1 (5:93)",
+    "frame": "Home · Record · EN v1 (5:94)",
+    "componentsBoard": "记梦首页 · v1 / Components (2:12)",
+    "note": "Absolute x/y are relative to the parent node. Vector path data lives in home-en.svg (absolute frame coordinates)."
+  },
+  "canvas": {
+    "width": 390,
+    "height": 844,
+    "background": "Paper/White #FFFFFF",
+    "safeTop": 52,
+    "sideGutter": 24
+  },
+  "tokens": {
+    "color": {
+      "Ink/Default": "#232321",
+      "Ink/Soft": "#6F6F6B",
+      "Ink/Faint": "#B9B9B4",
+      "Paper/White": "#FFFFFF"
+    },
+    "stroke": {
+      "icon": "1.3px, round cap, round join",
+      "doodle": "1.44px, round",
+      "buttonOval": "1.5px, round",
+      "underline/activeMark": "1px, round",
+      "arrow": "1.1px, Ink/Soft"
+    },
+    "inactiveIconOpacity": 0.55,
+    "textStyles": {
+      "Hand/Brand 22": {
+        "font": "Gaegu Regular",
+        "size": 22,
+        "lineHeight": "120%",
+        "letterSpacing": "0"
+      },
+      "Hand/Meta 14": {
+        "font": "Gaegu Regular",
+        "size": 15,
+        "lineHeight": "130%",
+        "letterSpacing": "0",
+        "note": "name says 14, actual size is 15"
+      },
+      "Hand EN/Question 28": {
+        "font": "Gaegu Light",
+        "size": 28,
+        "lineHeight": "122%",
+        "letterSpacing": "-1%"
+      },
+      "Hand EN/Action 21": {
+        "font": "Gaegu Regular",
+        "size": 21,
+        "lineHeight": "120%",
+        "letterSpacing": "0"
+      },
+      "Hand EN/Body 17": {
+        "font": "Gaegu Regular",
+        "size": 17,
+        "lineHeight": "130%",
+        "letterSpacing": "0"
+      },
+      "Hand EN/Label 14": {
+        "font": "Gaegu Regular",
+        "size": 14,
+        "lineHeight": "120%",
+        "letterSpacing": "0"
+      }
+    },
+    "textStylesZhOnly": {
+      "Hand/Question 26": {
+        "font": "LXGW Marker Gothic",
+        "size": 26,
+        "lineHeight": "140%"
+      },
+      "Hand/Action 19": {
+        "font": "LXGW Marker Gothic",
+        "size": 19,
+        "lineHeight": "130%"
+      },
+      "Hand/Body 15": {
+        "font": "LXGW Marker Gothic",
+        "size": 15,
+        "lineHeight": "150%"
+      },
+      "Hand/Label 12": {
+        "font": "LXGW Marker Gothic",
+        "size": 12,
+        "lineHeight": "130%"
+      }
+    }
+  },
+  "layout": [
+    {
+      "name": "Header",
+      "x": 24,
+      "y": 52,
+      "w": 350,
+      "h": 44,
+      "autoLayout": "row, space-between, align center",
+      "children": [
+        {
+          "name": "brand",
+          "type": "text",
+          "text": "dreamstragm.",
+          "style": "Hand/Brand 22",
+          "color": "Ink/Default"
+        },
+        {
+          "name": "Profile",
+          "type": "button",
+          "w": 44,
+          "h": 44,
+          "content": "18×18 hand-drawn filled ink dot (Ink/Default), centered",
+          "maps": "button.me-dot data-a=\"settings\""
+        }
+      ]
+    },
+    {
+      "name": "Doodle · door without a wall + floating stairs",
+      "type": "illustration",
+      "x": 150,
+      "y": 196,
+      "w": 216,
+      "h": 149,
+      "rotation": "1.5°",
+      "parts": [
+        "door frame",
+        "door panel (open)",
+        "knob",
+        "ground line",
+        "floating stairs"
+      ],
+      "stroke": "Ink/Default 1.44px round, no fill",
+      "svg": "home-en.svg #Doodle-door-without-a-wall-floating-stairs"
+    },
+    {
+      "name": "Prompt · record entry",
+      "x": 24,
+      "y": 416,
+      "w": 292,
+      "autoLayout": "column, gap 6",
+      "children": [
+        {
+          "name": "date",
+          "type": "text",
+          "text": "10.17 · Sat",
+          "style": "Hand/Meta 14",
+          "color": "Ink/Soft"
+        },
+        {
+          "name": "question",
+          "type": "text",
+          "text": "Where did you go last night?",
+          "style": "Hand EN/Question 28",
+          "color": "Ink/Default",
+          "width": 236,
+          "wraps": "2 lines: 'Where did you go' / 'last night?'"
+        },
+        {
+          "name": "Record actions",
+          "autoLayout": "row, gap 18, padding-top 22, align center",
+          "children": [
+            {
+              "name": "Record/Voice (primary)",
+              "component": "Record/Voice · 说下来 (2:34)",
+              "w": 149,
+              "h": 61,
+              "autoLayout": "row, gap 8, padding 18 34 18 30, align center",
+              "content": [
+                "Icon/Mic 24×24",
+                "label 'Say it' — Hand EN/Action 21, Ink/Default"
+              ],
+              "outline": "hand-drawn oval, 1.5px Ink/Default, no fill, overlaid on full button (path end overshoots start like a pen stroke)",
+              "maps": "data-a=\"newVoice\""
+            },
+            {
+              "name": "Record/Write (secondary link)",
+              "component": "Record/Write · 写下来 (2:44)",
+              "w": 125,
+              "h": 50,
+              "autoLayout": "column, gap 1, padding 12 4 10 4",
+              "content": [
+                "label 'or write it down' — Hand EN/Body 17, Ink/Default",
+                "wavy underline 1px Ink/Default under the label"
+              ],
+              "maps": "data-a=\"new\""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "History · past dreams",
+      "x": 24,
+      "y": 676,
+      "h": 46,
+      "autoLayout": "row, gap 6, padding 12 0, align center",
+      "children": [
+        {
+          "type": "text",
+          "text": "Past dreams",
+          "style": "Hand EN/Body 17",
+          "color": "Ink/Soft"
+        },
+        {
+          "type": "text",
+          "text": "3",
+          "style": "Hand/Meta 14",
+          "color": "Ink/Soft",
+          "note": "count of saved dreams (dynamic)"
+        },
+        {
+          "type": "icon",
+          "name": "arrow down 14×14",
+          "stroke": "Ink/Soft 1.1px"
+        }
+      ]
+    },
+    {
+      "name": "Nav/Bar",
+      "component": "Nav/Bar (2:66)",
+      "x": 0,
+      "y": 758,
+      "w": 390,
+      "h": 86,
+      "fill": "Paper/White",
+      "autoLayout": "row, space-between, padding 6 22 20 22",
+      "items": [
+        {
+          "label": "Journal",
+          "icon": "Icon/Journal",
+          "state": "Active",
+          "w": 88,
+          "h": 60,
+          "labelColor": "Ink/Default",
+          "iconOpacity": 1,
+          "activeMark": "26×4 hand-drawn underline below label",
+          "maps": "data-a=\"nav:journal\""
+        },
+        {
+          "label": "Explore",
+          "icon": "Icon/Explore",
+          "state": "Default",
+          "w": 88,
+          "h": 60,
+          "labelColor": "Ink/Soft",
+          "iconOpacity": 0.55,
+          "maps": "data-a=\"nav:explore\""
+        },
+        {
+          "label": "Circle",
+          "icon": "Icon/Circle",
+          "state": "Default",
+          "w": 88,
+          "h": 60,
+          "labelColor": "Ink/Soft",
+          "iconOpacity": 0.55,
+          "maps": "data-a=\"nav:circle\""
+        }
+      ],
+      "itemLayout": "column, gap 3, centered; icon 24×24, label Hand EN/Label 14"
+    }
+  ],
+  "components": {
+    "Icon/Journal": "2:14",
+    "Icon/Explore": "2:18",
+    "Icon/Circle": "2:23",
+    "Icon/Mic": "2:28",
+    "Record/Voice": {
+      "id": "2:34",
+      "props": {
+        "Label#2:0": "text"
+      }
+    },
+    "Record/Write": {
+      "id": "2:44",
+      "props": {
+        "Label#2:1": "text"
+      }
+    },
+    "Nav/Item": {
+      "id": "2:65",
+      "variants": {
+        "State": [
+          "Active",
+          "Default"
+        ]
+      },
+      "props": {
+        "Label#2:2": "text",
+        "Icon#2:5": "instance swap (Journal / Explore / Circle)"
+      }
+    },
+    "Nav/Bar": "2:66"
+  },
+  "copy": {
+    "brand": "dreamstragm.",
+    "date": "10.17 · Sat",
+    "question": "Where did you go last night?",
+    "primaryAction": "Say it",
+    "secondaryAction": "or write it down",
+    "history": "Past dreams",
+    "nav": [
+      "Journal",
+      "Explore",
+      "Circle"
+    ],
+    "zhSource": {
+      "question": "昨晚，去了哪里？",
+      "primaryAction": "说下来",
+      "secondaryAction": "或者写下来",
+      "date": "10.17 · 周六",
+      "history": "以前的梦",
+      "nav": [
+        "梦境日志",
+        "探索",
+        "梦圈"
+      ]
+    }
+  }
+}

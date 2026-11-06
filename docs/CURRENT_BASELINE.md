@@ -52,3 +52,7 @@ main 是纯静态 HTML/CSS/JavaScript。没有服务端、真实认证、数据�
 ## 后续视觉授权
 
 11/6 用户进一步授权使用 Claude UI V2 导出包作为整个 App 的主要视觉方向。该决定更新视觉基线，功能与数据仍继承上述 GitHub 上传版及本日已完成调整；不导入参考中的旧服务端或会话实现。当前视觉实现分支 feat/paper-ui-v2，规则见 VISUAL_LANGUAGE_V2.md。
+
+## 英文交接包落地
+
+后续产品默认英文。用户提供同一 Figma 节点的离线交接包后，已在 feat/english-handoff-design 按其 Gaegu 字体、原始 SVG 与首页尺寸调整，同时保留粉发助手及现有功能。具体规范存于 docs/design/home-en-handoff.json。在线文件权限问题不再阻塞此次离线实现，但不表示已取得在线编辑权限。
