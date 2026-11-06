@@ -1,75 +1,36 @@
-# Dreamstragm 可点击前端原型
+# Dreamstragm
 
-## 预览
+English, mobile-first dream journal prototype. Runs with native HTML, CSS and JavaScript; no framework or runtime dependency installation.
 
-在此目录运行 `python3 scripts/preview.py`，然后访问 http://localhost:5174 。该预览仅供本机访问，只开放前端资源，不暴露环境文件或 Git 元数据。尚未提供公网或手机局域网访问。
+## Local preview
 
-无需安装依赖。index.html、style.css、app.js 和 ambient.js 是全部运行代码；没有远程字体、素材请求、后端、数据库或外部 API。
+Run `python3 scripts/preview.py` in this directory and open http://localhost:5174/ . The preview serves a fixed frontend file list on this computer only. It does not expose environment files or Git metadata. There is no production deployment.
 
-## 数据与边界
+## What works now
 
-数据仅保存在内存中，刷新或关闭页面后恢复固定示例。不要把真实梦境当成长期存档。
-语音不访问麦克风；整理仅规范空白；解梦为固定话术；图像为同一本地 SVG 占位插画；关系图为固定关系。三种风格是选择状态演示，不改变占位图。英文手写标题使用本地 Gaegu Light / Regular 字体，正文保持系统字体以便阅读。
+Dreams are saved in IndexedDB on this browser and address. Refreshing and reopening keeps saved originals, confirmed text, tags, text history, image files and reflection cards. Each dream has one stable ID; attachments keep their dream and source text version. Editing the current entry preserves the first original. Saving another image or card keeps the earlier ones.
 
-## 页面检查清单
+Local Circle posts and comments also persist as independent snapshots. They are not sent to a server or other people. Tags-only posts do not include private dream text. Deleting a private dream does not remove its separately shared snapshot.
 
-- [ ] 日志：新建 → 输入文字/日期 → 模拟整理 → 选择标签 → 确认 → 列表/详情。
-- [ ] 语音：新建 → 语音演示 → 开始 → 停止 → 修改转写 → 使用文字。
-- [ ] 详情：原文展开、编辑、导出弹层、删除确认；空标题可保存。
-- [ ] 导出：正文/原文、全部/当前、附原文与解读文字 → 下载 Markdown。
-- [ ] 整理：等待时点击失败示例 → 重试/返回修改；原输入保留。
-- [ ] 解梦：探索 → 选梦 → 三位向导 → 发送文字 → 解读卡 → 保存 → 相同日志详情查看。
-- [ ] 民俗：卡片及分享带文化娱乐示例标识；无真实预测。
-- [ ] 图像：探索 → 选梦 → 描述/风格 → 模拟等待/失败 → 结果 → 保存/下载/重新生成/分享。
-- [ ] 统计：周/月/年 → 人物/主题/事件 → 点击条目 → 来源记录。
-- [ ] 关系：点击标签或梦节点 → 对应示例记录。
-- [ ] 梦圈：发布 → 自由文字/引用梦 → 全文/关键词 → 附件/@示例用户 → 预览 → 发布。
-- [ ] 关键词预览与帖子不包含私人正文；帖子内容与日志独立。
-- [ ] 帖子详情：评论 → 本地显示 → 删除自己的评论/帖子。
-- [ ] 设置：数据管理、隐私说明、原型说明。
-- [ ] 首页：空状态示例、清除搜索、三项底部导航。
+Voice recording/transcription, tidy-up, interpretation, illustration generation and relationship analysis remain demonstrations. White noise is real browser-synthesised audio. Weather is manually chosen. There is no OpenAI connection, account authentication, backend, cloud sync or real community in this branch.
 
-## 已做验证
+## Data management
 
-JavaScript 语法检查通过；HTTP 200。浏览器实际走通新建整理保存、解梦卡保存、图像保存并在同一梦境查看、关键词预览发布、评论、关系节点查看。首页 360/390/430px 下文档宽度与视口一致，无横向溢出。电脑端居中保持 390px，手机填充可用宽度。
+Settings → Data & reset provides a full JSON backup, restore and confirmed deletion. Backups include private writing and attachment files; keep them private. Restore replaces this browser’s archive only after confirmation and validation (maximum 30 MB). Deleting all data stays empty after refresh; examples are seeded once only.
 
-## 本轮简化与未做部分
+Markdown exports remain available for Obsidian or manual import elsewhere. Use the JSON backup for complete text history and images. Data is bound to the browser profile and origin: different ports or domains do not share an archive. Clearing browser data, closing an incognito session or device loss may remove it. Unsaved drafts and chat messages are not automatically persisted; edited records warn before leaving.
 
-- 未连接 GitHub、认证、真实 AI、录音、后端或部署；这是本轮要求的本地演示。
-- 批量导出为一个 Markdown 文件的多个章节，暂未生成 ZIP 或图片附件包。
-- 没有真实解读来源检索、真实图片风格变换、持久存储或自动关系分析。
-- 没有临摹参考中的原有角色或原字体；插画是简化的本地占位图。
+## UI
 
-## 2026-11-06 试用反馈调整
+The local English Figma handoff supplies the Gaegu typography, SVG icons, door and stairs, hand-drawn voice action and Journal / Explore / Circle navigation. The pixel assistant and voice bubble are retained. Fonts are bundled locally with their SIL Open Font License. The original app’s functionality is preserved; no Claude backend was imported.
 
-沿用 GitHub main 上传版的笑脸、纸片视觉与三个主导航。主页加入语音气泡、当前日期和手动天气；移除重复品牌与欢迎语。记录顺序改为语音、内容、日期、可选标题。探索直接展示“解读梦境 / 生成梦境插画 / 查看梦境统计”。从日志详情进入探索时沿用当前梦境，支持更换；点击主导航重新进入探索则重新选择。
+## Verification
 
-白噪音是浏览器本地合成的真实循环声音：点击播放/静音，切到后台会暂停，返回后需手动播放。不使用外部音源。天气由用户手动选择，不是实时天气。其他语音与 AI 功能仍为模拟，数据刷新重置。
+- `node --test tests/storage.test.cjs tests/ambient.test.cjs`
+- `tests/storage-browser.cjs`: actual IndexedDB persistence, refresh/reopen, immutable original, versioned attachments, local snapshots, backups, quota errors and protected startup errors.
+- `tests/ui-smoke.cjs`: existing main flows and navigation.
+- `tests/handoff-layout.cjs`: homepage fonts, SVGs, geometry and history scrolling.
 
-### 本轮验证
+Browser scripts require Playwright and Chromium in the test environment. `PLAYWRIGHT_MODULE` and `CHROME_PATH` can point to existing installations; these are not App runtime dependencies. Start the preview server first. Tests use fictional records in isolated browser contexts.
 
-- `node --test tests/ambient.test.cjs`：3 项音频生命周期、防连点和失败恢复测试通过。
-- 独立 Chrome 浏览器实际操作：语音演示 → 修正 → 整理 → 无标题保存；当前梦境传递、更换、全局入口重新选择；解梦卡和图片保存；关键词隐私预览、发布、评论；统计入口。无 JavaScript 异常。
-- 首页在 360 / 390 / 430px 视口无横向溢出；390px 下检查记录页和探索页截图。白噪音实际 WebAudio 状态切换通过，但未验证真实手机音频听感、来电中断或后台兼容。
-- `tests/ui-smoke.cjs` 可重复执行上述检查；先运行预览服务，测试环境需提供 Playwright 与 Chromium（可通过 `PLAYWRIGHT_MODULE` 指定模块、`CHROME_PATH` 指定浏览器）。它们不是 App 运行依赖。
-- 本轮没有真实 AI 联调，没有发布生产版本。
-
-### 当前助手形象
-
-11/6 根据用户新选择，将笑脸占位替换为用户提供的粉发像素人物（assets/dream-assistant.png）。保留原始 64×64 透明 PNG，以 128×128 像素方式显示，统一用于首页、语音、加载、失败和空状态；语音气泡保留。
-
-## 视觉 V2：白纸与细签字笔
-
-2026-11-06 按用户提供的 Claude UI V2 参考，统一为白纸、深灰细线、手写标题、椭圆主动作和线稿导航；保留粉发像素助手及现有所有模拟流程。未导入参考中的服务端或旧 OpenAI 实现。完整页面覆盖、手机验证和字体差异见 [视觉规则与验收](docs/VISUAL_LANGUAGE_V2.md)。
-
-## English interface
-
-The prototype now uses English for interface copy, sample dreams, tags, scripted replies, notices and Markdown exports. User-entered text is preserved as written. The existing paper visual language remains in place: matching the requested English Figma design is pending file access, and has not been verified.
-
-## English Figma handoff applied
-
-The local `Dreamstragm_EN_Figma_Handoff.zip` supplies the exported English home screen, component board, vector paths and measurements. The homepage now follows that handoff: `dreamstragm.` header, door and floating stairs, two-line question, hand-drawn voice action, Past dreams and Journal / Explore / Circle navigation. The pixel assistant, voice bubble, manual weather, noise control, demo disclosure and export remain available as required additions. Past dreams scrolls to the existing list rather than removing journal features.
-
-Gaegu Light and Regular are stored in `assets/fonts` with the SIL Open Font License. SVG parts from the supplied export are stored in `assets/figma`; no online Figma access or remote font requests are required at runtime. Shared typography, navigation and paper dividers extend to the existing pages. `docs/design/home-en-handoff.json` preserves the design measurements.
-
-`tests/handoff-layout.cjs` checks local fonts, asset loading, responsive bounds, home coordinates, navigation placement and history scrolling (same browser-test setup as `tests/ui-smoke.cjs`). All AI and voice features remain demos; this change does not add a backend or persistence.
+Implementation and limits: [Local storage](docs/LOCAL_STORAGE.md). Design measurements: [English handoff](docs/design/home-en-handoff.json).

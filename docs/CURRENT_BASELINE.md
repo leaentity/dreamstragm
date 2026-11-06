@@ -56,3 +56,7 @@ main 是纯静态 HTML/CSS/JavaScript。没有服务端、真实认证、数据�
 ## 英文交接包落地
 
 后续产品默认英文。用户提供同一 Figma 节点的离线交接包后，已在 feat/english-handoff-design 按其 Gaegu 字体、原始 SVG 与首页尺寸调整，同时保留粉发助手及现有功能。具体规范存于 docs/design/home-en-handoff.json。在线文件权限问题不再阻塞此次离线实现，但不表示已取得在线编辑权限。
+
+## 本地存储已落地
+
+用户已授权并实施 feat/local-dream-storage。当前工作分支在上述英文 UI 上新增统一 IndexedDB 持久层，原文/正文版本/标签/图片/解读关联稳定梦境 ID，并保存独立本机梦圈快照。刷新不再重置已保存内容，旧“纯内存”描述仅表示历史 GitHub main 基线。当前实现与限制见 LOCAL_STORAGE.md，未导入其他版本代码、未接后端或真实 AI、未部署。
