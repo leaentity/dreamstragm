@@ -1,0 +1,32 @@
+"""本地静态预览；只提供前端白名单，不暴露 .git、文档或环境变量。"""
+import os
+from pathlib import Path
+from http.server import ThreadingHTTPServer, BaseHTTPRequestHandler
+from urllib.parse import urlparse
+ROOT = Path(__file__).resolve().parent.parent
+FILES = {'index.html': 'text/html', 'app.js': 'text/javascript', 'ambient.js': 'text/javascript', 'style.css': 'text/css', 'preview.png': 'image/png'}
+class Handler(BaseHTTPRequestHandler):
+    def do_GET(self):
+        name = urlparse(self.path).path.lstrip('/') or 'index.html'
+        if name not in FILES:
+            self.send_error(404)
+            return
+        try:
+            data = (ROOT / name).read_bytes()
+        except OSError:
+            self.send_error(404)
+            return
+        self.send_response(200)
+        self.send_header('Content-Type', FILES[name] + '; charset=utf-8')
+        self.send_header('Cache-Control', 'no-store')
+        self.end_headers()
+        self.wfile.write(data)
+    def log_message(self, *args):
+        pass
+if __name__ == '__main__':
+    port = int(os.environ.get('PORT', '5174'))
+    print(f'Dreamstragm: http://localhost:{port}/', flush=True)
+    try:
+        ThreadingHTTPServer(('127.0.0.1', port), Handler).serve_forever()
+    except KeyboardInterrupt:
+        pass

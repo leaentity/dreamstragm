@@ -7,7 +7,8 @@
 - 远端：https://github.com/leaentity/dreamstragm
 - 基线分支：main
 - 基线提交：e319068e9ac38cde38263d11c7f92e9f84f2fb47
-- 本地工作分支：feat/november-foundation
+- 基线记录分支：feat/november-foundation
+- 11/6 反馈实现分支：feat/day1-voice-first
 - 当前工作目录：/Users/zixuanwang/Documents/ChatGPT/作品集/dreamstragm
 
 此目录从远端 main 独立克隆。忽略其他目录的改动，不 cherry-pick、合并或复制 Claude 版本、本地 feat/freud-chat 的内容。其他版本仅保留原位，不删除。
@@ -46,4 +47,4 @@ main 是纯静态 HTML/CSS/JavaScript。没有服务端、真实认证、数据�
 
 ## 今日边界
 
-今天锁定版本和合同，不改现有产品 UI、不接 API、不创建新数据库、不调用付费服务、不部署、不合并 main。下一步按此基线实施本地可靠保存。
+基线确认后，用户追加授权实施当天试用反馈：语音优先、首页精简、手动天气、白噪音和当前梦境沿用。仅在上传版上小步调整，不接 API、不创建新数据库、不调用付费服务、不部署、不合并 main。下一步仍为本地可靠保存。
