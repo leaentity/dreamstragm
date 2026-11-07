@@ -1,0 +1,7 @@
+const{test}=require('node:test');const assert=require('node:assert/strict');const vm=require('node:vm');const fs=require('node:fs');
+function init(value,blocked=false){let saved=value;const document={documentElement:{},title:''};const box={document,localStorage:{getItem(){if(blocked)throw Error('Denied');return saved;},setItem(k,v){if(blocked)throw Error('Denied');saved=v;}}};vm.createContext(box);vm.runInContext(fs.readFileSync(require('node:path').join(__dirname,'../i18n.js'),'utf8'),box);return{...box,saved:()=>saved};}
+test('英文默认、中文偏好恢复及无效偏好回退',()=>{assert.equal(init(null).I18n.locale(),'en');assert.equal(init('xx').I18n.locale(),'en');const x=init('zh-CN');assert.equal(x.document.documentElement.lang,'zh-CN');assert.equal(x.I18n.t('Journal'),'梦境日志');assert.equal(x.I18n.t(''),'');});
+test('语言切换只保存偏好，动态内容按原样插值',()=>{const x=init(null);x.I18n.set('zh-CN');assert.equal(x.saved(),'zh-CN');assert.equal(x.I18n.t('Reflection saved to “{title}”',{title:'Privacy {count} 中英'}),'解读已保存至「Privacy {count} 中英」');assert.equal(x.I18n.t('☀ Sunny'),'☀ 晴');x.I18n.set('en');assert.equal(x.I18n.t('Journal'),'Journal');assert.throws(()=>x.I18n.set('fr'));});
+test('偏好写入被拒时当前页仍可切换',()=>{const x=init(null,true);assert.equal(x.I18n.set('zh-CN'),false);assert.equal(x.I18n.t('Send'),'发送');assert.equal(x.document.documentElement.lang,'zh-CN');});
+
+test('日期随语言显示，ISO 数据不被修改',()=>{const x=init(null);assert.match(x.I18n.date('2026-11-07'),/Nov/);x.I18n.set('zh-CN');assert.match(x.I18n.date('2026-11-07'),/2026年11月7日/);assert.equal(x.I18n.date('bad'),'bad');});

@@ -190,3 +190,8 @@ nav{justify-content:space-between}.home-hero .date{font-size:15px;letter-spacing
 .storage-start{padding-top:70px}.storage-start p{margin:20px 0}.storage-error{background:#f4f4f1;border-block:1px solid var(--ink);padding:12px 24px;font:14px/1.6 var(--text);position:relative;z-index:20}.saving-status{position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:60;background:var(--paper);border:var(--thin);padding:8px 20px;font:14px/1.6 var(--text)}.art img{display:block;width:100%;height:100%;object-fit:contain}#app[data-page=journal]:has(.storage-error) header{margin-top:20px}details.card p{white-space:pre-wrap}.storage-error .link{display:block}input[type=file]{max-width:100%;font-size:14px}
 
 .art img{filter:grayscale(1) contrast(.92) brightness(1.08)}.storage-error{position:fixed;top:0;left:50%;transform:translateX(-50%);width:min(430px,100%);max-height:30dvh;overflow:auto;z-index:70}
+
+/* 中文使用系统中文字体；英文继续采用交接稿 Gaegu。 */
+html:lang(zh-CN){--hand:'Hannotate SC','HanziPen SC','PingFang SC','Microsoft YaHei','Noto Sans SC',sans-serif}html:lang(zh-CN) h1{font-size:22px;line-height:1.4}html:lang(zh-CN) h2{font-size:25px;line-height:1.4}html:lang(zh-CN) h3{font-size:18px}html:lang(zh-CN) .btn{font-size:16px}html:lang(zh-CN) .link{font-size:14px}html:lang(zh-CN) .home-hero h2{line-height:34px;font-size:26px}html:lang(zh-CN) nav button{font-size:12px}html:lang(zh-CN) .tabs button{font-size:14px}html:lang(zh-CN) .card small,html:lang(zh-CN) .tag{font-size:12px}html:lang(zh-CN) .voice-bubble{font-size:15px}html:lang(zh-CN) .record-entry .write-entry{font-size:15px}html:lang(zh-CN) label{font-size:14px}#languageSelect{margin-bottom:6px}
+
+#app[data-page=journal] header h1{font-family:Gaegu,var(--hand);font-size:22px;line-height:1.2}

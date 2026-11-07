@@ -34,3 +34,13 @@ The local English Figma handoff supplies the Gaegu typography, SVG icons, door a
 Browser scripts require Playwright and Chromium in the test environment. `PLAYWRIGHT_MODULE` and `CHROME_PATH` can point to existing installations; these are not App runtime dependencies. Start the preview server first. Tests use fictional records in isolated browser contexts.
 
 Implementation and limits: [Local storage](docs/LOCAL_STORAGE.md). Design measurements: [English handoff](docs/design/home-en-handoff.json).
+
+## Interface language
+
+Settings → Interface language switches between English and 简体中文 immediately. English remains the default; the choice is remembered locally per browser/origin. If saving the preference is blocked, switching still works for the current tab with a notice. English retains the bundled Gaegu font; Chinese uses system Chinese fonts, whose appearance varies by device.
+
+Only explicit interface copy, accessible labels, prompts, known errors, date displays and Markdown headings are localized. User writing, stored sample entries, tag names, saved cards, posts, chat messages, IDs and backup contents stay unchanged. Language preferences are separate from the IndexedDB archive and are not included in its backup or cleared with dream data. AI output language and automatic translation are not part of this iteration.
+
+New UI copy should use `I18n.t` / `L` and a corresponding Chinese entry in `i18n.js`; never pass arbitrary user text through the dictionary. New business values must remain stable, with a separately translated display label.
+
+Tests: `node --test tests/i18n.test.cjs`; `tests/language-browser.cjs` checks switching/reload, unchanged database snapshot, preserved user markup/text and chat, Chinese errors and preference-write failure.
