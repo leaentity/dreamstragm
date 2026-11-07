@@ -54,12 +54,16 @@ Python 预览只适合静态 UI，没有整理接口。真实整理必须使用 
 仅在尚无 `.env` 的首次配置时，将 `.env.example` 复制为 `.env`。填入你自己的 `OPENAI_API_KEY`，并设置：
 
 ```dotenv
-OPENAI_MODEL=gpt-5.4-mini
+OPENAI_MODEL=gpt-6-luna
 ```
 
 `.env.example` 本身只含占位值。`.env` 与 `.env.*` 已被 Git 忽略，不能放进前端构建变量、聊天或 GitHub。配置改变后重启服务。也可直接通过服务端进程环境变量配置。
 
-建议 gpt-5.4-mini 作为首轮短文本整理候选，模型名称只由服务端环境读取，不散落在界面。按官方 2026-11-07 查询的标准 token 价格，输入 $0.75/百万、输出 $4.50/百万；假设 1,200 输入 + 800 输出 tokens，约 $0.0045/次，100 次约 $0.45。不是固定价，中文长度、指令、输出与模型实际用量会影响费用；账号能否调用该模型尚未验证。
+当前选择 gpt-6-luna，服务端显式设置 reasoning.effort=none 与 service_tier=default（Standard），避免默认 medium 推理与项目级加速档位造成额外用量。模型名称仍只由服务端环境读取。SDK 固定使用 OpenAI 官方 API 地址，不采用其他兼容服务商的地址。
+
+按官方 2026-11-07 查询的 Standard 价格，输入 $0.10/百万、输出 $0.50/百万；假设 1,200 输入 + 800 输出 tokens，约 $0.00052/次。不是固定价，输入和实际输出会影响费用。账号是否有 gpt-6-luna 权限仍需真实测试。原先 gpt-5.4-mini 为早期候选，不再是当前首选。
+
+[GPT-6 Luna 官方参数与价格](https://developers.openai.com/api/docs/models/gpt-6-luna)；[Responses service_tier](https://developers.openai.com/api/reference/typescript/resources/responses)。
 
 准备好有效凭据并愿意进行付费联调后，才手动运行：
 

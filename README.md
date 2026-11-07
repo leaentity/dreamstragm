@@ -49,6 +49,6 @@ Tests: `node --test tests/i18n.test.cjs`; `tests/language-browser.cjs` checks sw
 
 Before a request, input is saved locally as an unfinished draft tied to the same dream ID. Review and edit the proposed text, explicitly choose tags, then confirm a new text version. The original is never overwritten. An unfinished input can be resumed from dream details after a failure or refresh. Unconfirmed model output is not automatically persisted.
 
-Set `OPENAI_API_KEY` and `OPENAI_MODEL` only in the server environment or a Git-ignored `.env`, following the placeholder `.env.example`. Recommended first candidate: `gpt-5.4-mini`. See [configuration, costs, limitations and verification](docs/AI_TIDY.md). The server is local-only; deploying a paid API endpoint requires a separately reviewed hosting/access plan.
+Set `OPENAI_API_KEY` and `OPENAI_MODEL` only in the server environment or a Git-ignored `.env`, following the placeholder `.env.example`. Current candidate: `gpt-6-luna`, Standard service tier with reasoning effort set to none. See [configuration, costs, limitations and verification](docs/AI_TIDY.md). The server is local-only; deploying a paid API endpoint requires a separately reviewed hosting/access plan.
 
 `pnpm test` does not call OpenAI. Browser tests use explicit test fixtures for successful AI output. Only manually running `pnpm test:live` makes real API calls (two fictional notes); do not run it until you have credentials and intend to pay for those checks.

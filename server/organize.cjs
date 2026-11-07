@@ -15,8 +15,8 @@ function validateOutput(data,text){
 }
 function mappedError(error){if(error instanceof TidyError)return error;if(error?.name==='APIConnectionTimeoutError'||error?.name==='AbortError')return new TidyError('TIMEOUT',504);if([401,403].includes(error?.status))return new TidyError('AUTH_FAILED',503);if(error?.status===404)return new TidyError('MODEL_UNAVAILABLE',503);if(error?.status===400)return new TidyError('CONFIG_INVALID',503);if(error?.status===429)return new TidyError(error?.code==='insufficient_quota'||error?.error?.code==='insufficient_quota'?'BILLING_REQUIRED':'RATE_LIMITED',429);return new TidyError('UNAVAILABLE',503);}
 function createOrganizer({env=process.env,makeClient=options=>new OpenAI(options)}={}){
- return async text=>{try{const {key,model}=config(env),client=makeClient({apiKey:key,timeout:55000,maxRetries:0,logLevel:'off'});
- const response=await client.responses.create({model,instructions,input:[{role:'user',content:[{type:'input_text',text}]}],store:false,max_output_tokens:6000,text:{format:{type:'json_schema',name:'dream_tidy',strict:true,schema}}});
+ return async text=>{try{const {key,model}=config(env),client=makeClient({baseURL:'https://api.openai.com/v1',apiKey:key,timeout:55000,maxRetries:0,logLevel:'off'});
+ const response=await client.responses.create({model,reasoning:{effort:'none'},service_tier:'default',instructions,input:[{role:'user',content:[{type:'input_text',text}]}],store:false,max_output_tokens:6000,text:{format:{type:'json_schema',name:'dream_tidy',strict:true,schema}}});
  if(response.output?.some(item=>item.content?.some(part=>part.type==='refusal')))throw new TidyError('REFUSED',422);
  if(response.status!=='completed'||!response.output_text)throw new TidyError('INVALID_RESPONSE',502);
  let parsed;try{parsed=JSON.parse(response.output_text);}catch{throw new TidyError('INVALID_RESPONSE',502);}return validateOutput(parsed,text);
