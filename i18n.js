@@ -421,7 +421,9 @@
   "AI tidy-up sends only the selected note text to OpenAI when you choose it. Other AI and voice remain demos. Local Circle is not a public community. Backups contain private content; keep them private.": "选择 AI 整理时，仅当前文字会发送给 OpenAI。其他 AI 与语音仍为演示，单机梦圈不是真实公开社区。备份包含私人内容，请妥善保管。",
   "Use the navigation to visit your journal, explore and Dream circle. Tidy-up calls OpenAI through this app’s server. Voice, illustrations, interpretation and connections remain demos. Saved entries persist in this browser.": "底部导航可进入日志、探索与梦圈。整理通过项目服务端调用 OpenAI；语音、插画、解梦和关系仍为演示。已保存的记录会保留在此浏览器。",
   "Places": "地点",
-  "No confirmed tags in this period yet.": "这个时段还没有已确认的此类标签。"
+  "No confirmed tags in this period yet.": "这个时段还没有已确认的此类标签。",
+  "Blue-haired pixel dream assistant": "蓝发像素梦境助手",
+  "Full-body pixel dream assistant": "全身像素梦境助手"
 };
   function t(key,values={}) {
     let text=locale==='zh-CN'?(zh[key]??key):key;
