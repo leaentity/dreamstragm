@@ -10,11 +10,11 @@
   const check = (condition, message = 'Saved data is invalid. It has not been replaced.') => { if (!condition) fail(message); };
   const kinds = { Lin:'person', Grandma:'person', Forest:'place', Flying:'theme', Travel:'event', Reading:'event', Searching:'event' };
   function empty() { return {schemaVersion:VERSION, revision:0, dreams:[], tags:[], dreamTags:[], assets:[], cards:[], posts:[]}; }
-  function tagsFor(state, dreamId, names) {
+  function tagsFor(state, dreamId, names, types={}) {
     state.dreamTags = state.dreamTags.filter(t => t.dreamId !== dreamId);
     for (const name of [...new Set(names)]) {
       let tag = state.tags.find(t => t.name === name);
-      if (!tag) { tag = {id:uid(),name,type:kinds[name] || 'unknown'}; state.tags.push(tag); }
+      if (!tag) { tag = {id:uid(),name,type:kinds[name] || (Object.hasOwn(types,name)?types[name]:'unknown')}; state.tags.push(tag); }
       state.dreamTags.push({dreamId,tagId:tag.id,confirmed:true});
     }
   }
@@ -30,6 +30,7 @@
       check(typeof d.transcriptText === 'string' && validDate(d.dreamDate) && timestamp(d.createdAt) && timestamp(d.updatedAt) && typeof d.isDemo === 'boolean');
       check(Number.isSafeInteger(d.contentVersion) && d.contentVersion > 0 && Array.isArray(d.versions) && d.versions.length === d.contentVersion);
       check(d.versions.every((v,i) => v && v.number === i+1 && typeof v.text === 'string' && timestamp(v.createdAt)));
+      if(d.pendingDraft){const p=d.pendingDraft;check(typeof p.text==='string'&&typeof p.title==='string'&&validDate(p.date)&&Array.isArray(p.tags)&&p.tags.every(t=>typeof t==='string')&&typeof p.transcriptText==='string'&&timestamp(p.savedAt)&&p.baseVersion===d.contentVersion);}
     }
     for (const t of s.tags) check(typeof t.name === 'string' && ['person','place','theme','event','unknown'].includes(t.type));
     const links = new Set();
@@ -116,7 +117,15 @@
         if(!d){d={id:uid(),originalText:input.raw,createdAt:now(),contentVersion:0,versions:[],isDemo:false};s.dreams.unshift(d);}
         const text=input.confirmedText ?? input.raw;
         d.title=input.title.trim()||'Untitled dream';d.dreamDate=input.date;d.confirmedText=input.id?text:(input.confirmedText??null);d.transcriptText=input.transcriptText??d.transcriptText??'';
-        d.updatedAt=now();d.contentVersion++;d.versions.push({number:d.contentVersion,text,createdAt:now()});tagsFor(s,d.id,input.tags||[]);return d.id;
+        d.updatedAt=now();d.contentVersion++;d.versions.push({number:d.contentVersion,text,createdAt:now(),source:input.source==='openai'?'openai':'manual'});delete d.pendingDraft;tagsFor(s,d.id,input.tags||[],input.tagTypes||{});return d.id;
+      });
+    }
+    async function saveForTidy(input){
+      check(input.raw?.trim(),'Write a little dream fragment first.');check(validDate(input.date),'Choose a valid dream date.');
+      return commit(s=>{let d=s.dreams.find(d=>d.id===input.id);if(input.id)check(d,'This dream no longer exists. Your text has not been saved.');
+        if(!d){d={id:uid(),title:input.title.trim()||'Untitled dream',dreamDate:input.date,originalText:input.raw,confirmedText:null,transcriptText:input.transcriptText||'',createdAt:now(),updatedAt:now(),contentVersion:1,versions:[{number:1,text:input.raw,createdAt:now(),source:'manual'}],isDemo:false};s.dreams.unshift(d);tagsFor(s,d.id,input.tags||[]);}
+        // 整理前先存用户输入。既有正文不被未确认的草稿或模型结果覆盖。
+        d.pendingDraft={text:input.raw,title:input.title,date:input.date,tags:[...(input.tags||[])],transcriptText:input.transcriptText||'',baseVersion:d.contentVersion,savedAt:now()};d.updatedAt=now();return{id:d.id,sourceVersion:d.contentVersion};
       });
     }
     async function deleteDream(id){return commit((s,puts,removes)=>{check(s.dreams.some(d=>d.id===id),'Dream not found.');s.dreams=s.dreams.filter(d=>d.id!==id);s.dreamTags=s.dreamTags.filter(t=>t.dreamId!==id);s.cards=s.cards.filter(c=>c.dreamId!==id);for(const a of s.assets.filter(a=>a.dreamId===id))removes.push(a.id);s.assets=s.assets.filter(a=>a.dreamId!==id);});}
@@ -129,7 +138,7 @@
     async function backup(){return serial(async()=>{const data=clone(state), files=[];for(const [id,blob]of blobs){if(!state.assets.some(a=>a.id===id))continue;const bytes=new Uint8Array(await blob.arrayBuffer());let binary='';for(let i=0;i<bytes.length;i+=8192)binary+=String.fromCharCode(...bytes.subarray(i,i+8192));files.push({id,type:blob.type,data:btoa(binary)});}return JSON.stringify({format:'dreamstragm-backup',version:VERSION,state:data,files});});}
     async function restore(text){check(text.length<30*1024*1024,'This backup is too large (maximum 30 MB).');let input;try{input=JSON.parse(text);}catch{fail('This is not a valid JSON backup.');}check(input.format==='dreamstragm-backup'&&input.version===VERSION&&Array.isArray(input.files),'Unsupported backup. Nothing was replaced.');validate(input.state);const files=new Map();for(const f of input.files){check(typeof f.id==='string'&&!files.has(f.id)&&typeof f.type==='string'&&/^(image\/|audio\/)/.test(f.type));let binary;try{binary=atob(f.data);}catch{fail('Invalid attachment in backup.');}files.set(f.id,new Blob([Uint8Array.from(binary,c=>c.charCodeAt(0))],{type:f.type}));}check(input.state.assets.length===files.size&&input.state.assets.every(a=>files.has(a.id)&&files.get(a.id).type.startsWith(a.kind+'/')),'Backup attachments are missing. Nothing was replaced.');return commit((s,puts,removes)=>{for(const id of blobs.keys())removes.push(id);Object.assign(s,clone(input.state));for(const pair of files)puts.push(pair);for(const id of files.keys()){const index=removes.indexOf(id);if(index>=0)removes.splice(index,1);}});}
     async function clear(){return commit((s,puts,removes)=>{for(const id of blobs.keys())removes.push(id);Object.assign(s,empty());});}
-    return {open,list,posts,get:id=>list().find(d=>d.id===id),blob:id=>blobs.get(id),saveDream,deleteDream,addImage,addCard,addPost,comment,deleteComment,deletePost,backup,restore,clear,recovery:()=>JSON.stringify(recovery??null),snapshot:()=>clone(state)};
+    return {open,list,posts,get:id=>list().find(d=>d.id===id),blob:id=>blobs.get(id),saveDream,saveForTidy,deleteDream,addImage,addCard,addPost,comment,deleteComment,deletePost,backup,restore,clear,recovery:()=>JSON.stringify(recovery??null),snapshot:()=>clone(state)};
   }
   globalThis.DreamStore={create,validate};
 })();

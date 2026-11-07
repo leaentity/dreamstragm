@@ -1,10 +1,10 @@
 # Dreamstragm
 
-English, mobile-first dream journal prototype. Runs with native HTML, CSS and JavaScript; no framework or runtime dependency installation.
+English, mobile-first dream journal prototype. Uses native HTML, CSS and JavaScript with IndexedDB. A small Node server calls the OpenAI Responses API for tidy-up; there is no frontend framework.
 
 ## Local preview
 
-Run `python3 scripts/preview.py` in this directory and open http://localhost:5174/ . The preview serves a fixed frontend file list on this computer only. It does not expose environment files or Git metadata. There is no production deployment.
+Use Node 24+: run `pnpm install --frozen-lockfile`, then `pnpm start` and open http://localhost:5174/ . Stop the old Python preview first. The Node service serves an explicit frontend whitelist and `/api/organize` on this computer only. Environment files, server code and Git metadata are not served. No production deployment has been made.
 
 ## What works now
 
@@ -12,7 +12,7 @@ Dreams are saved in IndexedDB on this browser and address. Refreshing and reopen
 
 Local Circle posts and comments also persist as independent snapshots. They are not sent to a server or other people. Tags-only posts do not include private dream text. Deleting a private dream does not remove its separately shared snapshot.
 
-Voice recording/transcription, tidy-up, interpretation, illustration generation and relationship analysis remain demonstrations. White noise is real browser-synthesised audio. Weather is manually chosen. There is no OpenAI connection, account authentication, backend, cloud sync or real community in this branch.
+Tidy-up now calls a real server endpoint that uses the official OpenAI SDK. Without server credentials it reports a configuration error, with no demo fallback. Voice recording/transcription, interpretation, illustration generation and relationship analysis remain demonstrations. White noise is real browser-synthesised audio. Weather is manually chosen. There is no account authentication, cloud archive or real community. Live OpenAI verification is pending: the user chose to finish the integration and tests without an API key this round.
 
 ## Data management
 
@@ -44,3 +44,11 @@ Only explicit interface copy, accessible labels, prompts, known errors, date dis
 New UI copy should use `I18n.t` / `L` and a corresponding Chinese entry in `i18n.js`; never pass arbitrary user text through the dictionary. New business values must remain stable, with a separately translated display label.
 
 Tests: `node --test tests/i18n.test.cjs`; `tests/language-browser.cjs` checks switching/reload, unchanged database snapshot, preserved user markup/text and chat, Chinese errors and preference-write failure.
+
+## AI tidy-up
+
+Before a request, input is saved locally as an unfinished draft tied to the same dream ID. Review and edit the proposed text, explicitly choose tags, then confirm a new text version. The original is never overwritten. An unfinished input can be resumed from dream details after a failure or refresh. Unconfirmed model output is not automatically persisted.
+
+Set `OPENAI_API_KEY` and `OPENAI_MODEL` only in the server environment or a Git-ignored `.env`, following the placeholder `.env.example`. Recommended first candidate: `gpt-5.4-mini`. See [configuration, costs, limitations and verification](docs/AI_TIDY.md). The server is local-only; deploying a paid API endpoint requires a separately reviewed hosting/access plan.
+
+`pnpm test` does not call OpenAI. Browser tests use explicit test fixtures for successful AI output. Only manually running `pnpm test:live` makes real API calls (two fictional notes); do not run it until you have credentials and intend to pay for those checks.

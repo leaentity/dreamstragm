@@ -7,6 +7,7 @@ require('node:fs').mkdirSync('outputs', {recursive:true});
  const p=await browser.newPage({viewport:{width:390,height:844},deviceScaleFactor:1});
  const errors=[];p.on('pageerror',e=>errors.push(e.message));
  const a=s=>p.locator(`[data-a="${s}"]`);
+ await require('./fixtures/tidy.cjs')(p);
  await p.goto('http://localhost:5174/?v=20261106-storage1');await p.waitForSelector('nav');
  const idle=()=>p.waitForFunction(()=>!document.querySelector('.saving-status'));
  p.on('dialog',d=>d.accept());

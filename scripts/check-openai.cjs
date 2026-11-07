@@ -1,0 +1,3 @@
+// 仅由用户明确运行 pnpm test:live 时调用真实 API；不输出梦境或完整异常。
+const assert=require('node:assert/strict');const{createOrganizer}=require('../server/organize.cjs');
+(async()=>{const organize=createOrganizer();for(const [language,text,expected]of[['English','I was with Mina in a blue room. I think there was a small window, but I am not sure.',['Mina']],['中文','我和小夏在蓝色房间里，窗外好像有一棵树，但我记不清了。',['小夏']]]){const result=await organize(text);assert.ok(result.organizedText.trim());for(const word of expected)assert.ok(result.organizedText.includes(word));console.log(`PASS ${language}: real Responses API returned structured text. Review fidelity separately.`);}})().catch(error=>{console.error(`NOT PASSED: ${error.code||'CHECK_FAILED'}`);process.exitCode=1;});

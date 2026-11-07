@@ -60,3 +60,7 @@ main 是纯静态 HTML/CSS/JavaScript。没有服务端、真实认证、数据�
 ## 本地存储已落地
 
 用户已授权并实施 feat/local-dream-storage。当前工作分支在上述英文 UI 上新增统一 IndexedDB 持久层，原文/正文版本/标签/图片/解读关联稳定梦境 ID，并保存独立本机梦圈快照。刷新不再重置已保存内容，旧“纯内存”描述仅表示历史 GitHub main 基线。当前实现与限制见 LOCAL_STORAGE.md，未导入其他版本代码、未接后端或真实 AI、未部署。
+
+## OpenAI 整理接入阶段
+
+feat/openai-dream-tidy 在现有前端上新增同源 Node 服务与官方 SDK / Responses，保留 localhost:5174 的数据 origin。整理输入先本地保存，结果人工确认，其他 AI/语音仍演示。用户选择本轮无密钥测试；真实 OpenAI 联调尚未完成，不应记为已经接通成功。当前无生产部署，细节见 AI_TIDY.md。
