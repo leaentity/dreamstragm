@@ -12,7 +12,7 @@ Dreams are saved in IndexedDB on this browser and address. Refreshing and reopen
 
 Local Circle posts and comments also persist as independent snapshots. They are not sent to a server or other people. Tags-only posts do not include private dream text. Deleting a private dream does not remove its separately shared snapshot.
 
-Tidy-up now calls a real server endpoint that uses the official OpenAI SDK. Without server credentials it reports a configuration error, with no demo fallback. Voice recording/transcription, interpretation, illustration generation and relationship analysis remain demonstrations. White noise is real browser-synthesised audio. Weather is manually chosen. There is no account authentication, cloud archive or real community. Live OpenAI verification is pending: the user chose to finish the integration and tests without an API key this round.
+Tidy-up now calls a real server endpoint that uses the official OpenAI SDK. Without server credentials it reports a configuration error, with no demo fallback. Voice recording/transcription, interpretation, illustration generation and relationship analysis remain demonstrations. White noise is real browser-synthesised audio. Weather is manually chosen. There is no account authentication, cloud archive or real community. Live gpt-6-luna verification passed on November 7, 2026: two fictional English/Chinese requests and one complete browser tidy-up/save/reload flow. Broader quality evaluation and physical-phone testing remain pending.
 
 ## Data management
 
