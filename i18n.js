@@ -4,6 +4,9 @@
   let locale='en';
   try { const saved=localStorage.getItem(KEY);if(['en','zh-CN'].includes(saved))locale=saved; } catch {}
   const zh={
+  "Pause animation":"暂停动画",
+  "Play animation":"播放动画",
+  "Reduced motion is on":"已启用减少动态效果",
   "Waiting for a whale": "在云上，等一班鲸鱼",
   "Lin and I waited for a bus on a cloud. A blue whale arrived. Our tickets were leaves. I felt light and safe.": "梦到我和小林在云上等车。来的是一条蓝色鲸鱼，车票是一片叶子。很轻，很安心。",
   "Lin and I waited on a soft cloud platform with no timetable. A blue whale drifted towards us. We handed over our leaf tickets and set off for the distant moon.": "我和小林站在柔软的云朵站台，等一班没有时刻表的车。一条蓝色鲸鱼缓缓游来，我们递出叶子车票，向远处的月亮出发。",

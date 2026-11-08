@@ -200,3 +200,18 @@ html:lang(zh-CN){--hand:'Hannotate SC','HanziPen SC','PingFang SC','Microsoft Ya
 .assistant-sprite{width:192px;height:192px;background-image:url('assets/dream-assistant-spritesheet.png');background-size:1152px 960px;background-position:0 0;background-repeat:no-repeat;image-rendering:pixelated}
 
 .assistant-full-body{display:block;width:140px;height:270px;object-fit:contain;image-rendering:pixelated}
+
+/* 本地精灵按固定画布切帧；脚底基线一致，保留硬像素边缘。 */
+.assistant-actor{position:absolute;top:12px;left:0;width:140px;height:220px;pointer-events:none;image-rendering:pixelated;transition:transform .1s linear}
+.motion-ready .assistant-actor{background-image:url('assets/assistant-motion-v1.png');background-size:560px 660px;background-repeat:no-repeat}
+.assistant-actor .assistant-full-body{position:absolute;top:-12px}
+.motion-ready .assistant-full-body{visibility:hidden}
+.assistant-pause{position:absolute;top:-30px;left:160px;display:grid;place-items:center;width:44px;height:44px;padding:0;border:0;border-radius:50%;background:transparent;color:var(--soft);font:18px system-ui;cursor:pointer}
+.assistant-pause:hover{background:#f3f1f6}.assistant-pause:focus-visible{outline:2px solid var(--ink);outline-offset:2px}.assistant-pause:disabled{opacity:.45;cursor:default}
+.assistant-doodle{position:absolute;display:block;width:48px;height:48px;background-image:url('assets/assistant-doodles-v1.png');background-size:192px 144px;background-repeat:no-repeat;image-rendering:pixelated;opacity:0;pointer-events:none;transition:opacity 1.2s ease}
+.doodle-moon{left:156px;top:94px;background-position:0 0;transform:rotate(-12deg)}
+.doodle-star{left:116px;top:52px;background-position:-48px 0;transform:scale(.65)}
+.doodle-trail{left:-48px;top:164px;background-position:-48px -96px}
+[data-doodles="1"] .doodle-moon,[data-doodles="1"] .doodle-star,[data-doodles="2"] .assistant-doodle{opacity:.5}
+[data-motion-paused="true"] .assistant-actor{transition:none}
+@media(prefers-reduced-motion:reduce){.assistant-actor,.assistant-doodle{transition:none}.assistant-doodle{display:none}}
