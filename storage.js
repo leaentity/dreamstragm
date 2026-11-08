@@ -2,7 +2,7 @@
 (() => {
   const VERSION = 1, DB = 'dreamstragm-local';
   const clone = value => structuredClone(value);
-  const uid = () => crypto.randomUUID();
+  const uid = () => DreamIds.uuid();
   const now = () => new Date().toISOString();
   const validDate = value => typeof value==='string' && /^\d{4}-\d{2}-\d{2}$/.test(value) && !Number.isNaN(Date.parse(value+'T00:00:00Z')) && new Date(value+'T00:00:00Z').toISOString().slice(0,10)===value;
   const timestamp = value => typeof value==='string' && !Number.isNaN(Date.parse(value));

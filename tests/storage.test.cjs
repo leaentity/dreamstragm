@@ -1,3 +1,4 @@
+require('../ids.js');
 const {test}=require('node:test');const assert=require('node:assert/strict');
 globalThis.crypto??=require('node:crypto').webcrypto;require('../storage.js');
 function driver(){let state,blobs=new Map();return {writes:0,broken:false,async open(){},async read(){return {state:structuredClone(state),blobs:new Map(blobs)}},async write(next,puts,removes,expected){if(this.broken)throw new DOMException('Full','QuotaExceededError');if((state?.revision??null)!==expected)throw Error('Data changed in another tab');this.writes++;state=structuredClone(next);for(const[id,blob]of puts)blobs.set(id,blob);for(const id of removes)blobs.delete(id);}};}
