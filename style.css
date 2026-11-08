@@ -202,7 +202,7 @@ html:lang(zh-CN){--hand:'Hannotate SC','HanziPen SC','PingFang SC','Microsoft Ya
 .assistant-full-body{display:block;width:140px;height:270px;object-fit:contain;image-rendering:pixelated}
 
 /* 本地精灵按固定画布切帧；脚底基线一致，保留硬像素边缘。 */
-.assistant-actor{position:absolute;top:12px;left:0;width:140px;height:220px;pointer-events:none;image-rendering:pixelated;transition:transform .1s linear}
+.assistant-actor{position:absolute;top:12px;left:0;width:140px;height:220px;pointer-events:none;image-rendering:pixelated;transition:translate .1s linear}
 .motion-ready .assistant-actor{background-image:url('assets/assistant-motion-v1.png');background-size:560px 660px;background-repeat:no-repeat}
 .assistant-actor .assistant-full-body{position:absolute;top:-12px}
 .motion-ready .assistant-full-body{visibility:hidden}

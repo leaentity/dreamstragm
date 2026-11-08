@@ -25,8 +25,9 @@
     function paint(){
       const state=pose(reduced.matches?0:elapsed);
       actor.style.backgroundPosition=`${-(state.frame%4)*140}px ${-Math.floor(state.frame/4)*220}px`;
-      actor.style.transform=`translateX(${state.x}px)`;
-      // 朝向立即切换，只插值位移，防止翻身时横向压扁人物。
+      // 独立 translate 先于 scale 应用，镜像只翻人物，不反转移动坐标。
+      // 不混用 scale 属性与 transform:translateX，否则向左转身时位移也会镜像。
+      actor.style.translate=`${state.x}px 0`;
       actor.style.scale=state.flip?'-1 1':'1 1';
       root.dataset.doodles=loaded&&!reduced.matches?String(state.doodle||0):'0';
       root.dataset.motionPaused=String(paused||reduced.matches||!visible||document.hidden);
