@@ -40,6 +40,12 @@
       check(a.dreamId ? dreams.has(a.dreamId) && Number.isSafeInteger(a.sourceVersion) && a.sourceVersion>0 && a.sourceVersion<=s.dreams.find(d=>d.id===a.dreamId).contentVersion : posts.has(a.postId));
     }
     for (const c of s.cards) check(dreams.has(c.dreamId) && typeof c.text === 'string' && typeof c.god === 'string' && Number.isSafeInteger(c.sourceVersion) && c.sourceVersion>0 && c.sourceVersion<=s.dreams.find(d=>d.id===c.dreamId).contentVersion);
+    for (const card of s.cards) {
+      if (card.fields === undefined) continue;
+      check(card.fields && validDate(card.date) &&
+        ['detail','reading','question','fortune'].every(field =>
+          typeof card.fields[field] === 'string' && card.fields[field].trim() && card.fields[field].length <= 400));
+    }
     for (const p of s.posts) {
       check(typeof p.name === 'string' && typeof p.text === 'string' && Array.isArray(p.tags) && p.tags.every(t=>typeof t==='string') && Array.isArray(p.comments) && Array.isArray(p.assetIds));
       check(p.assetIds.every(id=>assets.has(id) && s.assets.find(a=>a.id===id).postId===p.id));

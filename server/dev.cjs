@@ -8,8 +8,9 @@ const files={'index.html':'text/html','style.css':'text/css','app.js':'text/java
 for(const name of ['door','profile','mic','voice-oval','write-underline','journal','explore','circle','active-mark','arrow-down'])files[`assets/figma/${name}.svg`]='image/svg+xml';
 for(const weight of ['Light','Regular'])files[`assets/fonts/Gaegu-${weight}.ttf`]='font/ttf';
 function createServer({organizeHandler=createHandler(),imageHandler=createImageHandler(),dreamChatHandler=createDreamChatHandler()}={}){return http.createServer(async(req,res)=>{let url;try{url=new URL(req.url,'http://localhost');}catch{res.writeHead(400);return res.end();}
- const guide=chatRoutes.get(url.pathname);
- if(guide)return dreamChatHandler(req,res,guide);
+ const forCard=url.pathname.endsWith('/card');
+ const guide=chatRoutes.get(forCard?url.pathname.slice(0,-5):url.pathname);
+ if(guide)return dreamChatHandler(req,res,guide,forCard);
  if(url.pathname==='/api/image')return imageHandler(req,res);
  if(url.pathname==='/api/organize')return organizeHandler(req,res);
  const name=url.pathname==='/'?'index.html':url.pathname.slice(1);

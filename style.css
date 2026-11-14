@@ -224,3 +224,8 @@ html:lang(zh-CN){--hand:'Hannotate SC','HanziPen SC','PingFang SC','Microsoft Ya
   filter: none;
   object-fit: contain;
 }
+
+.reflection-card small { display: block; }
+.reflection-card textarea { margin: 6px 0 12px; }
+.reflection-card p { overflow-wrap: anywhere; }
+.reflection-share { white-space: pre-wrap; overflow-wrap: anywhere; }

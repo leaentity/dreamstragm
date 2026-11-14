@@ -44,7 +44,7 @@ require('node:fs').mkdirSync('outputs', {recursive:true});
  const pub=await p.locator('main').innerText();assert.match(pub,/#Grandma/);assert.doesNotMatch(pub,/little patch of stars/);
  await a('confirmPublish').click();await idle();await p.locator('[data-a^="post:"]').first().click();await p.locator('#commentInput').fill('I love this dream');await a('comment').click();await idle();
  assert.match(await p.locator('main').innerText(),/I love this dream/);
- await a('nav:journal').click();await a('detail:2').click();assert.match(await p.locator('main').innerText(),/Reflection demo/);assert.equal(await p.locator('.art').count(),1);
+ await a('nav:journal').click();await a('detail:2').click();assert.match(await p.locator('main').innerText(),/Today’s fortune/);assert.equal(await p.locator('.art').count(),1);
  await a('exploreCurrent').click();await a('changeContext').click();await a('detail:3').click();await a('start:image').click();
  assert.match(await p.locator('[data-field="description"]').inputValue(),/went back to school/);assert.doesNotMatch(await p.locator('[data-field="description"]').inputValue(),/Grandma/);
  await a('nav:explore').click();assert.equal(await p.locator('.context-card').count(),0);await a('start:interpret').click();assert.equal(await a('detail:1').count(),1);

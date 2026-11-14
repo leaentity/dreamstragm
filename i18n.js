@@ -4,6 +4,18 @@
   let locale='en';
   try { const saved=localStorage.getItem(KEY);if(['en','zh-CN'].includes(saved))locale=saved; } catch {}
   const zh={
+  "Generate reflection card": "生成解读卡",
+  "Generating your reflection card…": "正在生成解读卡…",
+  "Dream detail": "梦境细节",
+  "One possible reading": "一种可能的读法",
+  "A question to keep": "留给自己的问题",
+  "Today’s fortune": "今日运势",
+  "Cultural entertainment": "文化娱乐",
+  "Reflection card saved": "解读卡已保存",
+  "The reflection card could not be generated. You can try again.": "解读卡生成失败，可以重试。",
+  "Fill in each part of the card before continuing.": "请填写卡片上的每一项。",
+  "AI tidy-up sends the selected note to OpenAI. Image generation sends the scene description and style you choose. Dream chat and card generation send the selected dream and current conversation. Circle posts stay in this browser.": "整理会向 OpenAI 发送所选梦境文字，生图会发送画面描述和风格。解梦对话和生成卡片会发送所选梦境及当前对话。梦圈帖子保存在此浏览器。",
+  "Use the navigation to visit your journal, explore and Dream circle. Tidy-up, illustration, dream conversations and reflection cards call OpenAI through this app’s server. Voice and connections are demos. Saved entries persist in this browser.": "可通过导航进入日志、探索和梦圈。整理、生图、解梦对话和解读卡通过服务端调用 OpenAI。语音和关系图为演示。已保存的记录保留在此浏览器。",
   "Cultural reflection": "民俗文化解读",
   "AI guide inspired by Jung. Explore your own associations with dream images.": "受荣格思想启发的 AI，陪你探索梦中意象带来的个人联想。",
   "Which image stands out, and what does it bring to mind?": "哪个意象最让你记得？它让你想起了什么？",

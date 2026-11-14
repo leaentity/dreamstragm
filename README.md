@@ -12,7 +12,7 @@ Dreams are saved in IndexedDB on this browser and address. Refreshing and reopen
 
 Local Circle posts and comments also persist as independent snapshots. They are not sent to a server or other people. Tags-only posts do not include private dream text. Deleting a private dream does not remove its separately shared snapshot.
 
-Tidy-up now calls a real server endpoint that uses the official OpenAI SDK. Without server credentials it reports a configuration error, with no demo fallback. Voice recording/transcription, reflection cards and relationship analysis remain demonstrations. White noise is real browser-synthesised audio. Weather is manually chosen. There is no account authentication, cloud archive or real community. Live gpt-6-luna verification passed on November 7, 2026: two fictional English/Chinese requests and one complete browser tidy-up/save/reload flow. Broader quality evaluation and physical-phone testing remain pending.
+Tidy-up now calls a real server endpoint that uses the official OpenAI SDK. Without server credentials it reports a configuration error, with no demo fallback. Voice recording/transcription and relationship analysis remain demonstrations. White noise is real browser-synthesised audio. Weather is manually chosen. There is no account authentication, cloud archive or real community. Live gpt-6-luna verification passed on November 7, 2026: two fictional English/Chinese requests and one complete browser tidy-up/save/reload flow. Broader quality evaluation and physical-phone testing remain pending.
 
 ## Data management
 
@@ -64,4 +64,4 @@ The server uses `OPENAI_API_KEY` and defaults to `gpt-image-2.5-flare`. Set `OPE
 
 Open a dream, select **Explore this dream → Explore your dream → Freud, Jung or Folklore**, and send a message. The app sends the selected original dream and current conversation to OpenAI using the existing server-side key and text model. For originals above 8,000 characters, paste the excerpt you want to discuss. Each message supports up to 1,500 characters. A conversation supports 12 replies and can be reset with **Start again**.
 
-Chat lives in the open page, and reopening a guide or refreshing starts a new session. The fixed server prompt guides exploratory reflection and accepts the user's corrections. The sample reflection card remains a separate demo.
+Chat lives in the open page, and reopening a guide or refreshing starts a new session. The fixed server prompt guides exploratory reflection and accepts the user's corrections. After at least one reply, choose **Generate reflection card** to review and edit a dream detail, a possible reading, a question and a dated fortune for cultural entertainment. Save the card to the dream or preview it as a local Circle post.
