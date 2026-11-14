@@ -43,4 +43,4 @@ function createHandler({organize=createOrganizer(),clock=()=>Date.now()}={}){
   }catch(error){const e=mappedError(error);send(e.status,{error:{code:e.code}});}
  };
 }
-module.exports={createOrganizer,createHandler,validateInput,validateOutput,TidyError,MAX_INPUT};
+module.exports={config,mappedError,createOrganizer,createHandler,validateInput,validateOutput,TidyError,MAX_INPUT};
