@@ -13,7 +13,7 @@ const MAX_MESSAGE = 1500;
 const MAX_REPLY = 2000;
 const MAX_TURNS = 12;
 
-const cardFields = ['detail', 'reading', 'question', 'fortune'];
+const cardFields = ['title', 'detail', 'association', 'reading', 'basis', 'question', 'fortune'];
 const cardFormat = {
   type: 'json_schema',
   name: 'dream_reflection_card',
@@ -25,12 +25,15 @@ const cardFormat = {
     additionalProperties: false,
   },
 };
-const cardInstructions = `Make a short reflection card from the completed dream dialogue. Respond in the language of the latest user message. Use the selected guide's lens. Preserve corrections and uncertainty. Keep dream events distinct from waking memories, personal associations, and the guide's hypotheses. For example, if a lantern in a dream reminds the dreamer of a friend's lamp, describe the lantern and the association separately. Do not imply the friend left that lantern in the dream. In detail, report only what the dreamer says happened in the dream. Each field is plain text, with no headings or Markdown:
-- detail: One concrete detail actually discussed in the conversation.
-- reading: One tentative interpretation rooted in what the dreamer said. Acknowledge unresolved ambiguity.
+const cardInstructions = `Make a substantial but easy to scan collectible reflection card from the completed dream dialogue. Respond in the language of the latest user message. Use the selected guide's lens. Preserve corrections and uncertainty. Keep dream events distinct from waking memories, personal associations, and the guide's hypotheses. For example, if a lantern in a dream reminds the dreamer of a friend's lamp, describe the lantern and the association separately. Do not imply the friend left that lantern in the dream. In detail, report only what the dreamer says happened in the dream. Each field is plain text, with no headings or Markdown:
+- title: A short evocative title anchored in a real image from the dream, at most 60 characters.
+- detail: Describe the central dream image and the emotional contrast, if one was actually supplied. Use one or two sentences.
+- association: Explain what the dreamer connected the image to in their own words. If no association was offered, say what remains open. Keep it distinct from the dream event.
+- reading: Develop one specific, tentative interpretation in two or three sentences. Follow the selected guide: Freud explores wishes or tensions, Jung explores personal symbolism or contrasting attitudes, and Folklore explores a Chinese cultural motif or story. Avoid generic encouragement as a substitute for a reading.
+- basis: Identify which concrete scene detail and which conversational contribution support that interpretation. State one meaningful limit if the evidence is incomplete.
 - question: One gentle question the dreamer can keep reflecting on.
 - fortune: One playful, culturally inspired suggestion for today grounded in the discussion. Give a small optional action, such as leaving a few minutes to pause or write. Do not predict events, score luck or give instructions about health, money, safety or major life choices.
-Use one or two short sentences per field. Avoid copying identifying information, long excerpts, private names or the full dream. Never turn crisis, trauma or distress into a fortune or diagnosis. If the conversation contains distress, use a neutral, supportive suggestion and avoid drawing conclusions from it.`;
+Keep each field under 400 characters. Give each section a distinct purpose and avoid repeating the same observation across fields. Avoid copying identifying information, long excerpts, private names or the full dream. Never turn crisis, trauma or distress into a fortune or diagnosis. If the conversation contains distress, use a neutral, supportive suggestion and avoid drawing conclusions from it.`;
 
 function validateConversation(body, forCard = false) {
   if (!body || typeof body.dream !== 'string' || !body.dream.trim() ||
@@ -74,7 +77,7 @@ function createReply({env = process.env, makeClient = options => new OpenAI(opti
       reasoning:{effort:'none'},
       service_tier:'default',
       store:false,
-      max_output_tokens:forCard ? 1000 : 600,
+      max_output_tokens:forCard ? 1800 : 600,
       ...(forCard ? {text:{format:cardFormat}} : {}),
     });
     if (response.output?.some(item => item.content?.some(part => part.type === 'refusal'))) {

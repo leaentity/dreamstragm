@@ -5,6 +5,10 @@ module.exports = async page => {
   }));
   await page.route('**/api/freud/card', route => route.fulfill({
     json:{card:{
+      title:'Light on the threshold',
+      association:'The doorway brings a familiar pause to mind.',
+      basis:'The dreamer paused before stepping inside.',
+
       detail:'A scene stayed with you.',
       reading:'There may be room to slow down.',
       question:'Which detail would you return to?',

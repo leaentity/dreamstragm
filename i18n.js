@@ -4,6 +4,12 @@
   let locale='en';
   try { const saved=localStorage.getItem(KEY);if(['en','zh-CN'].includes(saved))locale=saved; } catch {}
   const zh={
+  "Card title": "卡片标题",
+  "Personal associations": "个人联想",
+  "What supports this reading": "读法依据",
+  "Edit card text": "编辑卡片文字",
+  "Psychoanalytic reflection": "精神分析视角",
+  "Symbolic reflection": "意象解读",
   "Generate reflection card": "生成解读卡",
   "Generating your reflection card…": "正在生成解读卡…",
   "Dream detail": "梦境细节",

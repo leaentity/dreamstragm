@@ -229,3 +229,179 @@ html:lang(zh-CN){--hand:'Hannotate SC','HanziPen SC','PingFang SC','Microsoft Ya
 .reflection-card textarea { margin: 6px 0 12px; }
 .reflection-card p { overflow-wrap: anywhere; }
 .reflection-share { white-space: pre-wrap; overflow-wrap: anywhere; }
+
+.reflection-card {
+  --card-deep: #391b29;
+  --card-mid: #652b3e;
+  --card-metal: #e2bd7e;
+  --card-paper: #fbf3e4;
+  --card-ink: #38232c;
+  --card-rule: #c5a878;
+  --card-highlight: #f1e2c7;
+  isolation: isolate;
+  margin: 18px 0 24px;
+  overflow: hidden;
+  overflow-wrap: anywhere;
+  background: var(--card-paper);
+  color: var(--card-ink);
+  border: 1px solid var(--card-rule);
+  border-radius: 16px;
+  box-shadow: 0 2px 0 #30262919, 0 8px 20px #30262919;
+}
+.reflection-card--jung {
+  --card-deep: #17223c;
+  --card-mid: #393c64;
+  --card-metal: #dad0ed;
+  --card-paper: #f6f3fb;
+  --card-ink: #28243e;
+  --card-rule: #a99bbd;
+  --card-highlight: #eae3f3;
+}
+.reflection-card--folklore {
+  --card-deep: #882723;
+  --card-mid: #a93f30;
+  --card-metal: #ffe2a1;
+  --card-paper: #fff4d8;
+  --card-ink: #452b21;
+  --card-rule: #a65336;
+  --card-highlight: #f0e0af;
+}
+.reflection-card .reflection-cover {
+  position: relative;
+  display: grid;
+  justify-content: stretch;
+  justify-items: center;
+  align-items: center;
+  gap: 10px;
+  min-height: 222px;
+  padding: 26px 24px 22px;
+  text-align: center;
+  color: var(--card-metal);
+  background:
+    radial-gradient(ellipse at 50% 0%, var(--card-mid), transparent 74%),
+    repeating-linear-gradient(120deg, #ffffff06 0 1px, transparent 1px 8px),
+    var(--card-deep);
+  border-bottom: 3px double var(--card-metal);
+}
+.reflection-cover::before,
+.reflection-cover::after {
+  content: '';
+  position: absolute;
+  inset: 8px;
+  border: 1px solid var(--card-metal);
+  border-radius: 11px 11px 0 0;
+  opacity: .65;
+  pointer-events: none;
+}
+.reflection-cover::after {
+  inset: 12px;
+  border-style: dotted;
+  opacity: .42;
+}
+.reflection-emblem {
+  display: grid;
+  place-items: center;
+  width: 66px;
+  height: 66px;
+  font: 34px/1 Georgia, serif;
+  border: 3px double var(--card-metal);
+  border-radius: 50% 50% 46% 46%;
+  background: #ffffff0d;
+  box-shadow: 0 0 0 4px #ffffff14;
+}
+.reflection-card--jung .reflection-emblem {
+  border-radius: 50%;
+  box-shadow: 0 0 0 4px #ffffff1c, 0 0 24px #dbd5ff32;
+}
+.reflection-card--folklore .reflection-cover {
+  background:
+    repeating-linear-gradient(45deg, #ffe5a519 0 2px, transparent 2px 11px),
+    var(--card-deep);
+  border-bottom: 6px solid #264e3d;
+}
+.reflection-card--folklore .reflection-cover::before {
+  border: 3px double var(--card-metal);
+  border-radius: 4px;
+}
+.reflection-card--folklore .reflection-cover::after {
+  border-color: #b1c091;
+}
+.reflection-card--folklore .reflection-emblem {
+  color: #ffdf9c;
+  background: #264e3d;
+  border-radius: 22% 48%;
+}
+.reflection-guide,
+.reflection-cover time {
+  font: 500 12px/1.4 var(--text);
+}
+.reflection-cover h3 {
+  margin: 0;
+  color: #fff9ee;
+  font: 400 clamp(25px,7vw,34px)/1.18 Georgia,'Songti SC','Noto Serif CJK SC',serif;
+}
+.reflection-body { padding: 6px 18px 18px; }
+.reflection-section {
+  padding: 14px 0;
+  border-bottom: 1px solid var(--card-rule);
+}
+.reflection-card h4 {
+  margin: 0 0 5px;
+  font: 700 14px/1.5 var(--text);
+}
+.reflection-card p {
+  margin: 0;
+  white-space: pre-wrap;
+  font: 400 14px/1.7 var(--text);
+}
+.reflection-section--reading {
+  margin: 10px -5px 0;
+  padding: 12px;
+  border: 1px solid var(--card-rule);
+  border-radius: 8px;
+  background: var(--card-highlight);
+}
+.reflection-fortune {
+  margin-top: 15px;
+  padding: 13px;
+  border: 3px double var(--card-rule);
+  border-radius: 8px;
+}
+.reflection-fortune small {
+  display: block;
+  margin: 0 0 5px;
+  font: 500 11px/1.4 var(--text);
+}
+.reflection-editor { margin: 0 0 14px; }
+.reflection-editor summary {
+  padding: 8px 0;
+  cursor: pointer;
+}
+.reflection-editor textarea { margin: 6px 0 12px; }
+
+.reflection-card--freud .reflection-emblem {
+  width: 56px;
+  height: 74px;
+  border-radius: 54% 54% 3px 3px / 44% 44% 3px 3px;
+  background:
+    linear-gradient(90deg, transparent 48%, #e2bd7e60 49% 51%, transparent 52%),
+    linear-gradient(0deg, #1d0e1a8a, #d98b603d);
+}
+.reflection-card--jung .reflection-cover {
+  background:
+    radial-gradient(circle at 17% 35%, #dacfee 0 1px, transparent 2px),
+    radial-gradient(circle at 79% 29%, #dacfee 0 1px, transparent 2px),
+    radial-gradient(circle at 83% 52%, #dacfee 0 1px, transparent 2px),
+    radial-gradient(ellipse at 50% 0%, var(--card-mid), transparent 74%),
+    var(--card-deep);
+}
+.reflection-card--folklore .reflection-emblem {
+  border-radius: 50%;
+  outline: 1px solid #ffdf9c;
+  outline-offset: 4px;
+  box-shadow: 0 0 0 8px #6f2422;
+}
+.reflection-card--folklore .reflection-fortune {
+  border-color: #567152;
+  background: #e7e8c8;
+}

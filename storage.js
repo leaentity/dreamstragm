@@ -9,6 +9,27 @@
   const fail = message => { throw new Error(message); };
   const check = (condition, message = 'Saved data is invalid. It has not been replaced.') => { if (!condition) fail(message); };
   const kinds = { Lin:'person', Grandma:'person', Forest:'place', Flying:'theme', Travel:'event', Reading:'event', Searching:'event' };
+  const cardFields = ['detail','reading','question','fortune'];
+  const extraCardFields = ['title','association','basis'];
+  const cardTextValid = value => typeof value === 'string' && value.trim() && value.length <= 400;
+  function checkCardFields(card) {
+    if (card.fields === undefined) return;
+    check(card.fields && validDate(card.date) &&
+      cardFields.every(field => cardTextValid(card.fields[field])) &&
+      extraCardFields.every(field => card.fields[field] === undefined || cardTextValid(card.fields[field])) &&
+      Object.keys(card.fields).every(field => [...cardFields,...extraCardFields].includes(field)));
+  }
+  function publicCard(card) {
+    if (!card) return null;
+    const snapshot = {text:card.text};
+    if (card.fields !== undefined) {
+      checkCardFields(card);
+      snapshot.god = card.god;
+      snapshot.date = card.date;
+      snapshot.fields = {...card.fields};
+    }
+    return snapshot;
+  }
   function empty() { return {schemaVersion:VERSION, revision:0, dreams:[], tags:[], dreamTags:[], assets:[], cards:[], posts:[]}; }
   function tagsFor(state, dreamId, names, types={}) {
     state.dreamTags = state.dreamTags.filter(t => t.dreamId !== dreamId);
@@ -40,17 +61,16 @@
       check(a.dreamId ? dreams.has(a.dreamId) && Number.isSafeInteger(a.sourceVersion) && a.sourceVersion>0 && a.sourceVersion<=s.dreams.find(d=>d.id===a.dreamId).contentVersion : posts.has(a.postId));
     }
     for (const c of s.cards) check(dreams.has(c.dreamId) && typeof c.text === 'string' && typeof c.god === 'string' && Number.isSafeInteger(c.sourceVersion) && c.sourceVersion>0 && c.sourceVersion<=s.dreams.find(d=>d.id===c.dreamId).contentVersion);
-    for (const card of s.cards) {
-      if (card.fields === undefined) continue;
-      check(card.fields && validDate(card.date) &&
-        ['detail','reading','question','fortune'].every(field =>
-          typeof card.fields[field] === 'string' && card.fields[field].trim() && card.fields[field].length <= 400));
-    }
+    for (const card of s.cards) checkCardFields(card);
     for (const p of s.posts) {
       check(typeof p.name === 'string' && typeof p.text === 'string' && Array.isArray(p.tags) && p.tags.every(t=>typeof t==='string') && Array.isArray(p.comments) && Array.isArray(p.assetIds));
       check(p.assetIds.every(id=>assets.has(id) && s.assets.find(a=>a.id===id).postId===p.id));
       check(p.comments.every(c=>typeof c.name==='string' && typeof c.text==='string'));
-      check(!p.card || typeof p.card.text === 'string');
+      if (p.card) {
+        check(typeof p.card.text === 'string' && Object.keys(p.card).every(key => ['text','god','date','fields'].includes(key)));
+        if (p.card.fields !== undefined) check(['Freud','Jung','Folklore'].includes(p.card.god));
+        checkCardFields(p.card);
+      }
       // 公开实体不保留私人日志引用、原文或对话，导入也不能绕过此边界。
       check(Object.keys(p).every(k=>['id','name','text','tags','comments','assetIds','card','createdAt','isDemo'].includes(k)));
     }
@@ -137,7 +157,7 @@
     async function deleteDream(id){return commit((s,puts,removes)=>{check(s.dreams.some(d=>d.id===id),'Dream not found.');s.dreams=s.dreams.filter(d=>d.id!==id);s.dreamTags=s.dreamTags.filter(t=>t.dreamId!==id);s.cards=s.cards.filter(c=>c.dreamId!==id);for(const a of s.assets.filter(a=>a.dreamId===id))removes.push(a.id);s.assets=s.assets.filter(a=>a.dreamId!==id);});}
     async function addImage(id,{blob,...meta}){check(blob instanceof Blob && blob.size>0 && blob.type.startsWith('image/'),'The image could not be saved.');return commit((s,puts)=>{const d=s.dreams.find(d=>d.id===id);check(d,'Dream not found.');const a={...meta,id:uid(),dreamId:id,kind:'image',sourceVersion:meta.sourceVersion??d.contentVersion,isDemo:meta.isDemo??true,status:'ready',createdAt:now()};s.assets.push(a);puts.push([a.id,blob]);return a.id;});}
     async function addCard(id,card){return commit(s=>{const d=s.dreams.find(d=>d.id===id);check(d,'Dream not found.');const c={...card,id:uid(),dreamId:id,sourceVersion:card.sourceVersion??d.contentVersion,isDemo:card.isDemo??true,createdAt:now()};s.cards.push(c);return c.id;});}
-    async function addPost({text,tags=[],imageBlob,imageIsDemo=true,card}){return commit((s,puts)=>{const id=uid(),assetIds=[];if(imageBlob){check(imageBlob instanceof Blob,'Missing image attachment.');const aid=uid();assetIds.push(aid);s.assets.push({id:aid,postId:id,dreamId:null,kind:'image',isDemo:imageIsDemo,status:'ready',createdAt:now()});puts.push([aid,imageBlob]);}s.posts.unshift({id,name:'You',text,tags:[...tags],card:card?{text:card.text}:null,comments:[],assetIds,createdAt:now(),isDemo:true});return id;});}
+    async function addPost({text,tags=[],imageBlob,imageIsDemo=true,card}){return commit((s,puts)=>{const id=uid(),assetIds=[];if(imageBlob){check(imageBlob instanceof Blob,'Missing image attachment.');const aid=uid();assetIds.push(aid);s.assets.push({id:aid,postId:id,dreamId:null,kind:'image',isDemo:imageIsDemo,status:'ready',createdAt:now()});puts.push([aid,imageBlob]);}s.posts.unshift({id,name:'You',text,tags:[...tags],card:publicCard(card),comments:[],assetIds,createdAt:now(),isDemo:true});return id;});}
     async function comment(postId,text){check(text.trim(),'Write a reply first.');return commit(s=>{const p=s.posts.find(p=>p.id===postId);check(p,'Post not found.');p.comments.push({name:'You',text:text.trim()});});}
     async function deleteComment(postId,index){return commit(s=>{const p=s.posts.find(p=>p.id===postId);check(p&&p.comments[index]?.name==='You','Comment not found.');p.comments.splice(index,1);});}
     async function deletePost(id){return commit((s,puts,removes)=>{check(s.posts.some(p=>p.id===id&&p.name==='You'),'Post not found.');s.posts=s.posts.filter(p=>p.id!==id);for(const a of s.assets.filter(a=>a.postId===id))removes.push(a.id);s.assets=s.assets.filter(a=>a.postId!==id);});}
