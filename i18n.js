@@ -4,6 +4,15 @@
   let locale='en';
   try { const saved=localStorage.getItem(KEY);if(['en','zh-CN'].includes(saved))locale=saved; } catch {}
   const zh={
+  "Cultural reflection": "民俗文化解读",
+  "AI guide inspired by Jung. Explore your own associations with dream images.": "受荣格思想启发的 AI，陪你探索梦中意象带来的个人联想。",
+  "Which image stands out, and what does it bring to mind?": "哪个意象最让你记得？它让你想起了什么？",
+  "Chinese folklore and imagery for personal reflection and entertainment.": "从中国民俗和传统意象出发，供个人反思与文化娱乐。",
+  "Which image would you like to explore through folklore?": "你想从民俗角度聊聊梦里的哪个意象？",
+  "Dream chat needs an OpenAI API key and model on the server.": "解梦对话需要在服务端配置 OpenAI 密钥和模型。",
+  "Dream chat is busy. Wait a moment, then try again.": "解梦对话暂时忙碌，请稍后再试。",
+  "AI tidy-up sends the selected note to OpenAI. Image generation sends the scene description and style you choose. Dream conversations send the selected dream and current conversation when you send a message. Circle posts stay in this browser.": "整理会向 OpenAI 发送所选梦境文字，生图会发送画面描述和风格。解梦发送消息时，会提交所选梦境和当前对话。梦圈帖子保存在此浏览器。",
+  "Use the navigation to visit your journal, explore and Dream circle. Tidy-up, illustration and dream conversations call OpenAI through this app’s server. Voice, reflection cards and connections are demos. Saved entries persist in this browser.": "可通过导航进入日志、探索和梦圈。整理、生图和解梦会经由服务端调用 OpenAI。语音、解读卡和关系图为演示。已保存的记录保留在此浏览器。",
   "AI conversation": "AI 对话",
   "Freud · AI conversation": "弗洛伊德 · AI 对话",
   "AI guide inspired by Freud. For personal reflection, not therapy.": "受弗洛伊德思想启发的 AI，供个人探索与反思。",

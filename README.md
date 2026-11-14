@@ -4,7 +4,7 @@ English, mobile-first dream journal prototype. Uses native HTML, CSS and JavaScr
 
 ## Local preview
 
-Use Node 24+: run `pnpm install --frozen-lockfile`, then `pnpm start` and open http://localhost:5174/ . Stop the old Python preview first. The Node service serves an explicit frontend whitelist and the `/api/organize`, `/api/image` and `/api/freud` endpoints on this computer only. Environment files, server code and Git metadata are not served. No production deployment has been made.
+Use Node 24+: run `pnpm install --frozen-lockfile`, then `pnpm start` and open http://localhost:5174/ . Stop the old Python preview first. The Node service serves an explicit frontend whitelist and the tidy-up, illustration and dream chat endpoints on this computer only. Environment files, server code and Git metadata are not served. No production deployment has been made.
 
 ## What works now
 
@@ -12,7 +12,7 @@ Dreams are saved in IndexedDB on this browser and address. Refreshing and reopen
 
 Local Circle posts and comments also persist as independent snapshots. They are not sent to a server or other people. Tags-only posts do not include private dream text. Deleting a private dream does not remove its separately shared snapshot.
 
-Tidy-up now calls a real server endpoint that uses the official OpenAI SDK. Without server credentials it reports a configuration error, with no demo fallback. Voice recording/transcription, Jung, folklore and relationship analysis remain demonstrations. White noise is real browser-synthesised audio. Weather is manually chosen. There is no account authentication, cloud archive or real community. Live gpt-6-luna verification passed on November 7, 2026: two fictional English/Chinese requests and one complete browser tidy-up/save/reload flow. Broader quality evaluation and physical-phone testing remain pending.
+Tidy-up now calls a real server endpoint that uses the official OpenAI SDK. Without server credentials it reports a configuration error, with no demo fallback. Voice recording/transcription, reflection cards and relationship analysis remain demonstrations. White noise is real browser-synthesised audio. Weather is manually chosen. There is no account authentication, cloud archive or real community. Live gpt-6-luna verification passed on November 7, 2026: two fictional English/Chinese requests and one complete browser tidy-up/save/reload flow. Broader quality evaluation and physical-phone testing remain pending.
 
 ## Data management
 
@@ -60,8 +60,8 @@ From a saved dream, open **Explore this dream → Illustrate your dream**. The s
 
 The server uses `OPENAI_API_KEY` and defaults to `gpt-image-2.5-flare`. Set `OPENAI_IMAGE_MODEL` in the server environment to override it. Image requests use square medium-quality JPEGs. The local endpoint allows one generation at a time and six attempts in ten minutes. The [OpenAI image generation guide](https://developers.openai.com/api/docs/guides/image-generation) describes project access requirements.
 
-## Freud conversation
+## Dream conversations
 
-Open a dream, select **Explore this dream → Explore your dream → Freud**, and send a message. The app sends the selected original dream and current conversation to OpenAI using the existing server-side key and text model. For originals above 8,000 characters, paste the excerpt you want to discuss. Each message supports up to 1,500 characters. A conversation supports 12 replies and can be reset with **Start again**.
+Open a dream, select **Explore this dream → Explore your dream → Freud, Jung or Folklore**, and send a message. The app sends the selected original dream and current conversation to OpenAI using the existing server-side key and text model. For originals above 8,000 characters, paste the excerpt you want to discuss. Each message supports up to 1,500 characters. A conversation supports 12 replies and can be reset with **Start again**.
 
 Chat lives in the open page, and reopening a guide or refreshing starts a new session. The fixed server prompt guides exploratory reflection and accepts the user's corrections. The sample reflection card remains a separate demo.

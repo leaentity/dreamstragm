@@ -1,13 +1,15 @@
 const http=require('node:http');const fs=require('node:fs');const path=require('node:path');const {createHandler}=require('./organize.cjs');
 const {createImageHandler}=require('./image.cjs');
-const {createFreudHandler}=require('./freud.cjs');
+const {createDreamChatHandler}=require('./dream-chat.cjs');
+const chatRoutes=new Map([['/api/freud','Freud'],['/api/jung','Jung'],['/api/folklore','Folklore']]);
 const root=path.resolve(__dirname,'..');
 // 与原静态预览相同的资源白名单，不提供 server、.env、备份、.git 或 node_modules。
 const files={'index.html':'text/html','style.css':'text/css','app.js':'text/javascript','ids.js':'text/javascript','assistant-motion.js':'text/javascript','assets/assistant-motion-v1.png':'image/png','assets/assistant-doodles-v1.png':'image/png','ambient.js':'text/javascript','i18n.js':'text/javascript','storage.js':'text/javascript','tidy.js':'text/javascript','preview.png':'image/png','assets/dream-assistant.png':'image/png','assets/dream-assistant-spritesheet.png':'image/png','assets/dream-assistant-full-body-v2.png':'image/png'};
 for(const name of ['door','profile','mic','voice-oval','write-underline','journal','explore','circle','active-mark','arrow-down'])files[`assets/figma/${name}.svg`]='image/svg+xml';
 for(const weight of ['Light','Regular'])files[`assets/fonts/Gaegu-${weight}.ttf`]='font/ttf';
-function createServer({organizeHandler=createHandler(),imageHandler=createImageHandler(),freudHandler=createFreudHandler()}={}){return http.createServer(async(req,res)=>{let url;try{url=new URL(req.url,'http://localhost');}catch{res.writeHead(400);return res.end();}
- if(url.pathname==='/api/freud')return freudHandler(req,res);
+function createServer({organizeHandler=createHandler(),imageHandler=createImageHandler(),dreamChatHandler=createDreamChatHandler()}={}){return http.createServer(async(req,res)=>{let url;try{url=new URL(req.url,'http://localhost');}catch{res.writeHead(400);return res.end();}
+ const guide=chatRoutes.get(url.pathname);
+ if(guide)return dreamChatHandler(req,res,guide);
  if(url.pathname==='/api/image')return imageHandler(req,res);
  if(url.pathname==='/api/organize')return organizeHandler(req,res);
  const name=url.pathname==='/'?'index.html':url.pathname.slice(1);
