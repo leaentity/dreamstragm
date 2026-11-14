@@ -1,10 +1,10 @@
 # Dreamstragm
 
-English, mobile-first dream journal prototype. Uses native HTML, CSS and JavaScript with IndexedDB. A small Node server calls the OpenAI Responses API for tidy-up; there is no frontend framework.
+English, mobile-first dream journal prototype. Uses native HTML, CSS and JavaScript with IndexedDB. A small Node server calls the OpenAI Responses API for tidy-up and the Images API for illustrations; there is no frontend framework.
 
 ## Local preview
 
-Use Node 24+: run `pnpm install --frozen-lockfile`, then `pnpm start` and open http://localhost:5174/ . Stop the old Python preview first. The Node service serves an explicit frontend whitelist and `/api/organize` on this computer only. Environment files, server code and Git metadata are not served. No production deployment has been made.
+Use Node 24+: run `pnpm install --frozen-lockfile`, then `pnpm start` and open http://localhost:5174/ . Stop the old Python preview first. The Node service serves an explicit frontend whitelist and the `/api/organize` and `/api/image` endpoints on this computer only. Environment files, server code and Git metadata are not served. No production deployment has been made.
 
 ## What works now
 
@@ -12,7 +12,7 @@ Dreams are saved in IndexedDB on this browser and address. Refreshing and reopen
 
 Local Circle posts and comments also persist as independent snapshots. They are not sent to a server or other people. Tags-only posts do not include private dream text. Deleting a private dream does not remove its separately shared snapshot.
 
-Tidy-up now calls a real server endpoint that uses the official OpenAI SDK. Without server credentials it reports a configuration error, with no demo fallback. Voice recording/transcription, interpretation, illustration generation and relationship analysis remain demonstrations. White noise is real browser-synthesised audio. Weather is manually chosen. There is no account authentication, cloud archive or real community. Live gpt-6-luna verification passed on November 7, 2026: two fictional English/Chinese requests and one complete browser tidy-up/save/reload flow. Broader quality evaluation and physical-phone testing remain pending.
+Tidy-up now calls a real server endpoint that uses the official OpenAI SDK. Without server credentials it reports a configuration error, with no demo fallback. Voice recording/transcription, interpretation and relationship analysis remain demonstrations. White noise is real browser-synthesised audio. Weather is manually chosen. There is no account authentication, cloud archive or real community. Live gpt-6-luna verification passed on November 7, 2026: two fictional English/Chinese requests and one complete browser tidy-up/save/reload flow. Broader quality evaluation and physical-phone testing remain pending.
 
 ## Data management
 
@@ -51,4 +51,11 @@ Before a request, input is saved locally as an unfinished draft tied to the same
 
 Set `OPENAI_API_KEY` and `OPENAI_MODEL` only in the server environment or a Git-ignored `.env`, following the placeholder `.env.example`. Current candidate: `gpt-6-luna`, Standard service tier with reasoning effort set to none. See [configuration, costs, limitations and verification](docs/AI_TIDY.md). The server is local-only; deploying a paid API endpoint requires a separately reviewed hosting/access plan.
 
-`pnpm test` does not call OpenAI. Browser tests use explicit test fixtures for successful AI output. Only manually running `pnpm test:live` makes real API calls (two fictional notes); do not run it until you have credentials and intend to pay for those checks.
+`pnpm test` does not call OpenAI. Browser tests use explicit test fixtures for successful AI output. Running `pnpm test:live` makes two real tidy-up requests with fictional notes.
+
+
+## AI illustrations
+
+From a saved dream, open **Explore this dream → Illustrate your dream**. The scene starts with the original dream text. Edit it, choose a style, then create one image. The selected description and style are sent to OpenAI when you generate. Save the result to attach the JPEG with its original-text version reference to the dream in IndexedDB. The result page offers JPEG download, system sharing where file sharing is supported, and a separate local Circle post preview.
+
+The server uses `OPENAI_API_KEY` and defaults to `gpt-image-2.5-flare`. Set `OPENAI_IMAGE_MODEL` in the server environment to override it. Image requests use square medium-quality JPEGs. The local endpoint allows one generation at a time and six attempts in ten minutes. The [OpenAI image generation guide](https://developers.openai.com/api/docs/guides/image-generation) describes project access requirements.

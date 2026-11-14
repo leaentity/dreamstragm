@@ -215,3 +215,12 @@ html:lang(zh-CN){--hand:'Hannotate SC','HanziPen SC','PingFang SC','Microsoft Ya
 [data-doodles="1"] .doodle-moon,[data-doodles="1"] .doodle-star,[data-doodles="2"] .assistant-doodle{opacity:.5}
 [data-motion-paused="true"] .assistant-actor{transition:none}
 @media(prefers-reduced-motion:reduce){.assistant-actor,.assistant-doodle{transition:none}.assistant-doodle{display:none}}
+
+.art.art-generated,
+#app[data-page=imageResult] .art.art-generated {
+  aspect-ratio: 1;
+}
+.art.art-generated img {
+  filter: none;
+  object-fit: contain;
+}
